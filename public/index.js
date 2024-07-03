@@ -14,7 +14,10 @@ async function myfetch(url, payload) {
     method: "POST",
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
-  }).then((res) => res.json());
+  }).then((res) => {
+    console.log(res.json())
+  return  res.json()
+  });
 }
 
 regBtn.addEventListener("click", async () => {
