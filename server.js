@@ -185,41 +185,17 @@ app.post("/login", async (req, res) => {
   console.log("Login request received:", req.body)
   let user,conn
   try {
-    conn = await pool.getConnection()
+    
+ 
 
-    const userQuery = `
-    SELECT * from users  where username = ? ;
-  `
-  console.log('ssssssssssssssssssssssssssssssssssssss\n\\n')
-    const userData = await conn.query(userQuery, [req.body.username])
-    if (userData.length > 0) {
-      const formattedData = {
-        passKeys: [
-          {
-            counter: userData[0].counter,
-            id: userData[0].id,
-            backedUp: !(!userData[0].backedUp),
-            webAuthnUserID: userData[0].webAuthnUserID,
-            deviceType: userData[0].deviceType,
-            transports: userData[0].transport
-            ? userData[0].transport.split(",")
-            : [],
-            credentialPublicKey: userData[0].credentialPublicKey
-            ? JSON.parse( userData[0].credentialPublicKey)
-            : [],
-          },
-        ],
-        username: userData[0].username,
-      }
-      user = formattedData
+  
+      user =  await fetch('http://18.215.166.62/login',{  method: "POST", body: JSON.stringify({username:req.body.username}),
     }
   
   } catch (err) {
-    if (conn) await conn.rollback()
+   
     console.error("Error fetching data:", err)
-  } finally {
-    if (conn) conn.release()
-  }
+  } 
 
   const opts = {
     rpID,
