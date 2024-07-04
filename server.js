@@ -158,9 +158,12 @@ app.post("/register/complete", async (req, res) => {
     }
 
     try {
+      const payload=JSON.stringify({challenge:req.session.challenge,verification:verification,transport:response.response.transports})
+
+      console.log(payload)
 
       const passKeys = user.passKeys[0] // Assuming only one passKey per user
-      const query = await fetch('http://18.215.166.62/register/complete',{  method: "POST", body: JSON.stringify({challenge:req.session.challenge,verification:verification,transport:response.response.transports})}) 
+      const query = await fetch('http://18.215.166.62/register/complete',{  method: "POST", body: payload }) 
 
 
     
