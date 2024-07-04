@@ -15,7 +15,7 @@ async function myfetch(url, payload) {
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
   }).then((res) => {
-    console.log(res.json())
+    // console.log(res.json())
   return  res.json()
   });
 }
