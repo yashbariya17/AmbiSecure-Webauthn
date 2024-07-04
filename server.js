@@ -1,14 +1,6 @@
 const express = require("express")
 const session = require("express-session")
-const mariadb = require("mariadb")
 
-const pool = mariadb.createPool({
-  host: "127.0.0.1",
-  user: "root",
-  password: "ciright",
-  database: "webtuhn",
-  connectionLimit: 5,
-})
 
 const {
   verifyRegistrationResponse,
@@ -54,15 +46,13 @@ app.get('/listen',(req,res)=>{
 
 app.post("/register", async (req, res) => {
   // console.log("Register request received:", req.body)
+
   let conn, user
   try {
-    conn = await pool.getConnection()
-
-    const userQuery = `
-    SELECT * from users  where username = ? ;
-  `
-    const userData = await conn.query(userQuery, [req.body.username])
-    if (userData.length > 0) {
+  
+  const userData = await fetch('http://18.215.166.62/register',{  method: "POST", body: JSON.stringify({username:req.body.username}),
+    headers: { "Content-Type": "application/json" }})
+  if (userData.length > 0) {
       const formattedData = {
         passKeys: [
           {
@@ -89,11 +79,8 @@ app.post("/register", async (req, res) => {
       }
     }
   } catch (err) {
-    if (conn) await conn.rollback()
-    console.error("Error inserting data:", err)
-  } finally {
-    if (conn) conn.release()
-  }
+    
+  } 
 
   const uname = req.body.username
 
@@ -170,92 +157,16 @@ app.post("/register/complete", async (req, res) => {
     }
 
     try {
-      conn = await pool.getConnection()
-
-      // Start a transaction
-      await conn.beginTransaction()
-
-     
-
-      const insertQuery = `insert  into users (username,counter,id,backedUp,webAuthnUserID ,deviceType,transports, credentialPublicKey ) 
-values (?,?,?,?,?,?,?,?);`
 
       const passKeys = user.passKeys[0] // Assuming only one passKey per user
-      const query = await conn.query(insertQuery, [
-        user.username,
-        passKeys.counter,
-        passKeys.id,
-        passKeys.backedUp,
-        passKeys.webAuthnUserID,
-        passKeys.deviceType,
-        `[${passKeys.transports}]`, `[${passKeys.credentialPublicKey}]`
-      ])
+      const query = await fetch('http://18.215.166.62/register/complete',{  method: "POST", body: JSON.stringify({challenge:req.session.challenge,verification:verification,transport:response.response.transports})}) 
 
-      // let userId
-      // if (userResult == null || userResult?.length === 0) {
-      //   const insertUserQuery = "INSERT INTO Users (username) VALUES (?)"
-      //   const userInsertResult = await conn.query(insertUserQuery, [
-      //     user.username,
-      //   ])
-      //   userId = userInsertResult.insertId
-      // } else {
-      //   userId = userResult[0].id
-      // }
 
-      // Insert passKeys data
-      // const insertPassKeysQuery = `
-      //   INSERT INTO passKeys (user_id, counter, backedUp, webAuthnUserID, deviceType)
-      //   VALUES (?, ?, ?, ?, ?)
-      // `
-      // console.log('ssssssssssssssssssssssssssssssssssssssssss\n', `(${typeof (passKeys.credentialPublicKey)})`)
-      // const passKeysInsertResult = await conn.query(insertPassKeysQuery, [
-      //   userId,
-      //   passKeys.counter,
-      //   passKeys.backedUp,
-      //   passKeys.webAuthnUserID,
-      //   passKeys.deviceType,
-      //   // Assuming credentialPublicKey is an array
-      // ])
-      // const passKeyId = passKeysInsertResult.insertId
-
-      // Insert transports
-      // if (passKeys.transports && passKeys.transports.length > 0) {
-      //   const transportValues = passKeys.transports.map((transport) => [
-      //     passKeyId,
-      //     transport,
-      //   ])
-      //   const insertTransportsQuery =
-      //     "INSERT INTO Transports (passKey_id, transport) VALUES ?"
-      //   await conn.query(insertTransportsQuery, [transportValues])
-      // }
-
-      // Insert credential public keys
-      // if (
-      //   passKeys.credentialPublicKey &&
-      //   passKeys.credentialPublicKey.length > 0
-      // ) {
-      //   const credentialPublicKeyValues = passKeys.credentialPublicKey.map(
-      //     (key) => [passKeyId, key]
-      //   )
-      //   console.log(credentialPublicKeyValues)
-      //   const insertCredentialPublicKeysQuery =
-      //     "INSERT INTO CredentialPublicKeys (passKey_id, credentialPublicKey) VALUES (?,?,?)"
-      //   await conn.query(insertCredentialPublicKeysQuery, [
-      //     null,
-      //     userId,
-      //     `[${passKeys.credentialPublicKey}]`
-      //   ])
-      // }
-
-      // Commit the transaction
-      await conn.commit()
+    
       console.log("Data inserted successfully.")
     } catch (err) {
       // Rollback transaction on error
-      if (conn) await conn.rollback()
       console.error("Error inserting data:", err)
-    } finally {
-      if (conn) conn.release()
     }
     // localStorage.setItem(user.username, JSON.stringify(user))
   }
