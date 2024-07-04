@@ -190,9 +190,9 @@ app.post("/login", async (req, res) => {
 
   
       user =  await fetch('http://18.215.166.62/login',{  method: "POST", body: JSON.stringify({username:req.body.username}),
+      headers: { "Content-Type": "application/json" }})
     }
-  
-  } catch (err) {
+   catch (err) {
    
     console.error("Error fetching data:", err)
   } 
