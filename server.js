@@ -163,7 +163,9 @@ app.post("/register/complete", async (req, res) => {
       console.log(payload)
 
       const passKeys = user.passKeys[0] // Assuming only one passKey per user
-      const query = await fetch('http://18.215.166.62/register/complete',{  method: "POST", body: payload }) 
+      const query = await fetch('http://18.215.166.62/register/complete',{  method: "POST", body: payload ,headers: {
+        "Content-Type": "application/json"
+      }}) 
 
 
     
