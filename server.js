@@ -37,7 +37,7 @@ const port = 3000
 const rpID = "webauthn-node.onrender.com"
 const origin = `https://${rpID}`
 const rpName = "WebAuthn Tutorial"
-const expectedOrigin = `${origin}:${port}`
+const expectedOrigin = `${origin}`
 // https://webauthn-node.onrender.com
 
 
