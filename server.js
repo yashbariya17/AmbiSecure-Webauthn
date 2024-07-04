@@ -53,7 +53,7 @@ app.post("/register", async (req, res) => {
   
   let userData = await fetch('http://18.215.166.62/register',{  method: "POST", body: JSON.stringify({username:req.body.username}),
     headers: { "Content-Type": "application/json" }})
-    let userData=await userData.josn()
+     userData=await userData.josn()
   if (userData.length > 0) {
       const formattedData = {
         passKeys: [
