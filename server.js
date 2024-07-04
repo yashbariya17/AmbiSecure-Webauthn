@@ -196,6 +196,7 @@ app.post("/login", async (req, res) => {
    
     console.error("Error fetching data:", err)
   } 
+  console.log(user)
 
   const opts = {
     rpID,
