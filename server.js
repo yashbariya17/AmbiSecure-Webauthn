@@ -198,17 +198,20 @@ app.post("/login", async (req, res) => {
   let user;
 
   try {
-    user = await fetch('http://18.215.166.62/login', {
+    const userData = await fetch('http://18.215.166.62/login', {
       method: "POST",
       body: JSON.stringify({ username: req.body.username }),
       headers: { "Content-Type": "application/json" }
     });
 
-    if (!user.ok) {
-      throw new Error(`Failed to fetch user data: ${user.statusText}`);
+    if (!userData.ok) {
+      throw new Error(`Failed to fetch user data: ${userData.statusText}`);
     }
 
-    user = await user.json();
+    const responseText = await userData.text();
+    console.log("Response Text:", responseText);
+
+    user = JSON.parse(responseText);
 
     // Check if the user is found
     if (!user || user.length === 0) {
