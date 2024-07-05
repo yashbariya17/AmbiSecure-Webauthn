@@ -53,6 +53,11 @@ app.post("/register", async (req, res) => {
       body: JSON.stringify({ username: req.body.username }),
       headers: { "Content-Type": "application/json" }
     });
+
+    if (!userData.ok) {
+      throw new Error(`Failed to fetch registration data: ${userData.statusText}`);
+    }
+
     userData = await userData.json();
     if (userData.length > 0 && userData != null) {
       const formattedData = {
@@ -172,6 +177,10 @@ app.post("/register/complete", async (req, res) => {
         }
       });
 
+      if (!query.ok) {
+        throw new Error(`Failed to complete registration: ${query.statusText}`);
+      }
+
       console.log("Data inserted successfully.");
     } catch (err) {
       // Rollback transaction on error
@@ -194,6 +203,11 @@ app.post("/login", async (req, res) => {
       body: JSON.stringify({ username: req.body.username }),
       headers: { "Content-Type": "application/json" }
     });
+
+    if (!user.ok) {
+      throw new Error(`Failed to fetch user data: ${user.statusText}`);
+    }
+
     user = await user.json();
 
     // Check if the user is found
@@ -232,16 +246,11 @@ app.post("/login/complete", async (req, res) => {
   const { options, user } = req.session.challenge;
   const body = req.body;
 
-  // Ensure user and user.passKeys are defined
-  if (!user || !user.passKeys) {
-    return res.status(400).send({ error: "Invalid session data" });
-  }
-
   const passKey = user.passKeys.find((key) => key.id === body.id);
   if (!passKey) {
     return res
       .status(400)
-      .send({ error: `Could not find passkey ${body.id} for user ${user.username}` });
+      .send({ error: `Could not find passkey ${body.id} for user ${user.id}` });
   }
 
   console.log("PassKey Info:", passKey);
@@ -268,7 +277,7 @@ app.post("/login/complete", async (req, res) => {
   if (verified) {
     passKey.counter = authenticationInfo.newCounter;
     user.passKeys = user.passKeys.map((i) => (i.id == passKey.id ? passKey : i));
-
+    
     console.log('\n\n\n', user);
     // localStorage.setItem(user.username, JSON.stringify(user));
   }
