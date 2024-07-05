@@ -1,23 +1,22 @@
-const express = require("express")
-const session = require("express-session")
-
-
+const express = require("express");
+const session = require("express-session");
+const fetch = require("node-fetch"); // Ensure you have this package installed
 const {
   verifyRegistrationResponse,
   generateRegistrationOptions,
   verifyAuthenticationResponse,
   generateAuthenticationOptions,
-} = require("@simplewebauthn/server")
+} = require("@simplewebauthn/server");
 
-const memoryStore = require("memorystore")
-const { LocalStorage } = require("node-localstorage")
+const memoryStore = require("memorystore");
+const { LocalStorage } = require("node-localstorage");
 
-const app = express()
-const MemoryStore = memoryStore(session)
-const localStorage = new LocalStorage("./db")
+const app = express();
+const MemoryStore = memoryStore(session);
+const localStorage = new LocalStorage("./db");
 
-app.use(express.json())
-app.use(express.static("./public/"))
+app.use(express.json());
+app.use(express.static("./public/"));
 app.use(
   session({
     resave: false,
@@ -28,33 +27,34 @@ app.use(
       maxAge: 86400000,
     },
     store: new MemoryStore({
-      checkPeriod: 86_400_000,
+      checkPeriod: 86400000,
     }),
   })
-)
+);
 
-const port = 3000
-const rpID = "webauthn-node.onrender.com"
-const origin = `https://${rpID}`
-const rpName = "WebAuthn Tutorial"
-const expectedOrigin = `${origin}`
+const port = 3000;
+const rpID = "webauthn-node.onrender.com";
+const origin = `https://${rpID}`;
+const rpName = "WebAuthn Tutorial";
+const expectedOrigin = `${origin}`;
 // https://webauthn-node.onrender.com
 
-
-app.get('/listen',(req,res)=>{
+app.get('/listen', (req, res) => {
   res.send('Helllo...');
-})
+});
 
 app.post("/register", async (req, res) => {
   // console.log("Register request received:", req.body)
 
-  let conn, user
+  let user;
   try {
-  
-  let userData = await fetch('http://18.215.166.62/register',{  method: "POST", body: JSON.stringify({username:req.body.username}),
-    headers: { "Content-Type": "application/json" }})
-     userData=await userData.json()
-  if (userData.length > 0 && userData!=null) {
+    let userData = await fetch('http://18.215.166.62/register', {
+      method: "POST",
+      body: JSON.stringify({ username: req.body.username }),
+      headers: { "Content-Type": "application/json" }
+    });
+    userData = await userData.json();
+    if (userData.length > 0 && userData != null) {
       const formattedData = {
         passKeys: [
           {
@@ -64,29 +64,29 @@ app.post("/register", async (req, res) => {
             webAuthnUserID: userData[0].webAuthnUserID,
             deviceType: userData[0].deviceType,
             transports: userData[0].transport
-            ? userData[0].transport.split(",")
-            : [],
+              ? userData[0].transport.split(",")
+              : [],
             credentialPublicKey: userData[0].credentialPublicKey
-            ? userData[0].credentialPublicKey.split(",")
-            : [],
+              ? userData[0].credentialPublicKey.split(",")
+              : [],
           },
         ],
         username: userData[0].username,
-      }
-      user = formattedData
+      };
+      user = formattedData;
     } else {
       user = {
         passKeys: [],
         username: req.body.username,
-      }
+      };
     }
   } catch (err) {
-    
-  } 
+    console.error("Error fetching registration data:", err);
+    return res.status(500).send({ error: "Internal server error" });
+  }
 
-  const uname = req.body.username
-
-  const { username: userName, passKeys } = user
+  const uname = req.body.username;
+  const { username: userName, passKeys } = user;
 
   const opts = {
     rpID,
@@ -101,18 +101,18 @@ app.post("/register", async (req, res) => {
       id: key.id,
       transports: key.transports,
     })),
-  }
-  const options = await generateRegistrationOptions(opts)
+  };
+  const options = await generateRegistrationOptions(opts);
 
-  req.session.challenge = { user, options }
-  res.send(options)
-})
+  req.session.challenge = { user, options };
+  res.send(options);
+});
 
 app.post("/register/complete", async (req, res) => {
   // console.log("Register complete request received:", req.body)
 
-  const response = req.body
-  const { options, user } = req.session.challenge
+  const response = req.body;
+  const { options, user } = req.session.challenge;
   // console.log('\t\t\theloooooo', user.passKeys)
 
   const opts = {
@@ -121,17 +121,17 @@ app.post("/register/complete", async (req, res) => {
     expectedRPID: rpID,
     requireUserVerification: false,
     expectedChallenge: options.challenge,
-  }
+  };
 
-  let verification
+  let verification;
   try {
-    verification = await verifyRegistrationResponse(opts)
+    verification = await verifyRegistrationResponse(opts);
   } catch (error) {
-    console.error(error)
-    return res.status(400).send({ error: error.message })
+    console.error(error);
+    return res.status(400).send({ error: error.message });
   }
 
-  const { verified, registrationInfo } = verification
+  const { verified, registrationInfo } = verification;
 
   if (verified && registrationInfo) {
     const {
@@ -140,11 +140,11 @@ app.post("/register/complete", async (req, res) => {
       credentialBackedUp,
       credentialPublicKey,
       credentialDeviceType,
-    } = registrationInfo
+    } = registrationInfo;
 
-    console.log("Registration Info:", registrationInfo)
+    console.log("Registration Info:", registrationInfo);
 
-    const passKey = user.passKeys.find((key) => key.id === credentialID)
+    const passKey = user.passKeys.find((key) => key.id === credentialID);
 
     if (!passKey || passKey.length === 0) {
       user.passKeys.push({
@@ -155,78 +155,96 @@ app.post("/register/complete", async (req, res) => {
         deviceType: credentialDeviceType,
         transports: response.response.transports,
         credentialPublicKey: Array.from(credentialPublicKey),
-      })
+      });
     }
 
     try {
-      const payload=JSON.stringify({challenge:req.session.challenge,verification:verification,transport:response.response.transports})
+      const payload = JSON.stringify({ challenge: req.session.challenge, verification: verification, transport: response.response.transports });
 
-      console.log(payload)
+      console.log(payload);
 
-      const passKeys = user.passKeys[0] // Assuming only one passKey per user
-      const query = await fetch('http://18.215.166.62/register/complete',{  method: "POST", body: payload ,headers: {
-        "Content-Type": "application/json"
-      }}) 
+      const passKeys = user.passKeys[0]; // Assuming only one passKey per user
+      const query = await fetch('http://18.215.166.62/register/complete', {
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
 
-
-    
-      console.log("Data inserted successfully.")
+      console.log("Data inserted successfully.");
     } catch (err) {
       // Rollback transaction on error
-      console.error("Error inserting data:", err)
+      console.error("Error inserting data:", err);
     }
-    // localStorage.setItem(user.username, JSON.stringify(user))
+    // localStorage.setItem(user.username, JSON.stringify(user));
   }
 
-  req.session.challenge = undefined
-  res.send({ verified })
-})
+  req.session.challenge = undefined;
+  res.send({ verified });
+});
 
 app.post("/login", async (req, res) => {
-  console.log("Login request received:", req.body)
-  let user,conn
-  try {
-    
- 
+  console.log("Login request received:", req.body);
+  let user;
 
-  
-      user =  await fetch('http://18.215.166.62/login',{  method: "POST", body: JSON.stringify({username:req.body.username}),
-      headers: { "Content-Type": "application/json" }})
-      user=await user.json()
+  try {
+    user = await fetch('http://18.215.166.62/login', {
+      method: "POST",
+      body: JSON.stringify({ username: req.body.username }),
+      headers: { "Content-Type": "application/json" }
+    });
+    user = await user.json();
+
+    // Check if the user is found
+    if (!user || user.length === 0) {
+      return res.status(404).send({ error: "User not found" });
     }
-   catch (err) {
-   
-    console.error("Error fetching data:", err)
-  } 
-  console.log(user)
+
+    // Ensure user.passKeys is defined
+    if (!user.passKeys || user.passKeys.length === 0) {
+      return res.status(400).send({ error: "No passkeys found for user" });
+    }
+
+  } catch (err) {
+    console.error("Error fetching data:", err);
+    return res.status(500).send({ error: "Internal server error" });
+  }
+
+  console.log(user);
 
   const opts = {
     rpID,
-    allowCredentials: user?.passKeys.map((key) => ({
+    allowCredentials: user.passKeys.map((key) => ({
       id: key.id,
       transports: key.transports,
     })),
-  }
-  const options = await generateAuthenticationOptions(opts)
+  };
+  const options = await generateAuthenticationOptions(opts);
 
-  req.session.challenge = { user, options }
-  res.send(options)
-})
+  req.session.challenge = { user, options };
+  res.send(options);
+});
 
 app.post("/login/complete", async (req, res) => {
-  console.log("Login complete request received:", req.body)
+  console.log("Login complete request received:", req.body);
 
-  const { options, user } = req.session.challenge
-  const body = req.body
+  const { options, user } = req.session.challenge;
+  const body = req.body;
 
-  const passKey = user.passKeys.find((key) => key.id === body.id)
+  // Ensure user and user.passKeys are defined
+  if (!user || !user.passKeys) {
+    return res.status(400).send({ error: "Invalid session data" });
+  }
+
+  const passKey = user.passKeys.find((key) => key.id === body.id);
   if (!passKey) {
     return res
       .status(400)
-      .send({ error: `Could not find passkey ${body.id} for user ${user.id}` })
+      .send({ error: `Could not find passkey ${body.id} for user ${user.username}` });
   }
 
-  console.log("PassKey Info:", passKey)
+  console.log("PassKey Info:", passKey);
 
   const opts = {
     response: body,
@@ -235,62 +253,30 @@ app.post("/login/complete", async (req, res) => {
     authenticator: passKey,
     requireUserVerification: false,
     expectedChallenge: options.challenge,
-  }
+  };
 
-  let verification
+  let verification;
   try {
-    verification = await verifyAuthenticationResponse(opts)
+    verification = await verifyAuthenticationResponse(opts);
   } catch (error) {
-    console.error(error)
-    return res.status(400).send({ error: error.message })
+    console.error(error);
+    return res.status(400).send({ error: error.message });
   }
 
-  const { verified, authenticationInfo } = verification
+  const { verified, authenticationInfo } = verification;
 
   if (verified) {
-    passKey.counter = authenticationInfo.newCounter
-    user.passKeys = user.passKeys.map((i) => (i.id == passKey.id ? passKey : i))
-    
-    // try {
-    //   conn = await pool.getConnection()
+    passKey.counter = authenticationInfo.newCounter;
+    user.passKeys = user.passKeys.map((i) => (i.id == passKey.id ? passKey : i));
 
-    //   // Start a transaction
-    //   await conn.beginTransaction()
-
-    //   // Insert user if not exists (assuming username is unique)
-     
-    //   const insertQuery = `insert  into users (username,counter,id,backedUp,webAuthnUserID ,deviceType,transports, credentialPublicKey ) 
-    //   values (?,?,?,?,?,?,?,?);`
-      
-    //         const passKeys = user.passKeys[0] // Assuming only one passKey per user
-    //         const query = await conn.query(insertQuery, [
-    //           user.username,
-    //           passKeys.counter,
-    //           passKeys.id,
-    //           passKeys.backedUp,
-    //           passKeys.webAuthnUserID,
-    //           passKeys.deviceType,
-    //           `[${passKeys.transports}]`, `[${passKeys.credentialPublicKey}]`
-    //         ])
-
-    //   // Commit the transaction
-    //   await conn.commit()
-    //   console.log("Data inserted successfully.")
-    // } catch (err) {
-      
-    //   if (conn) await conn.rollback()
-    //   console.error("Error inserting data:", err)
-    // } finally {
-    //   if (conn) conn.release()
-    // }
-    console.log('\n\n\n',user)
-    // localStorage.setItem(user.username, JSON.stringify(user))
+    console.log('\n\n\n', user);
+    // localStorage.setItem(user.username, JSON.stringify(user));
   }
 
-  req.session.challenge = undefined
-  res.send({ verified })
-})
+  req.session.challenge = undefined;
+  res.send({ verified });
+});
 
 app.listen(port, () => {
-  console.log(`🚀 Server ready on port ${port}`)
-})
+  console.log(`🚀 Server ready on port ${port}`);
+});
