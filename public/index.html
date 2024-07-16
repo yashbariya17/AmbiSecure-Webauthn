@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fido Validation demo</title>
+  <title>WebAuthn</title>
+  <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,12 +16,12 @@
     <header class="header" id="header">
       <h1 class="title">Fido Validation demo</h1>
       <p class="subtitle">A demo of the Fido validation specification</p>
-      <input type="text" class="username" name="username" placeholder="Username" />
+      <input type="text" class="username" name="username" placeholder="Username">
       <div class="button-container">
         <button class="register">Register</button>
-	<button class="login">Log In</button>
+        <button class="login">Log In</button>
       </div>
-	<p class="message"></p>
+      <p class="message"></p>
     </header>
     <section class="products-section" id="products">
       <h2 class="section-title">Explore Products</h2>
@@ -45,6 +50,7 @@
       <p class="footer-text">Sponsored by AmbiSecure Electronics</p>
     </footer>
   </div>
-<script src="index.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
+
