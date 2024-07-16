@@ -6,17 +6,19 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Ubuntu', sans-serif;
-  background-color: #f0f0f0; /* Adjust background color as needed */
+  background-color: #ff5e5e; /* Red background */
+  color: #ffffff; /* White font color */
 }
 
 .container {
   width: 90%;
   max-width: 1200px; /* Adjust max-width as per design */
-  background-color: #ffffff; /* Adjust container background */
+  background-color: #ffffff; /* White background for container */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
   border-radius: 8px; /* Rounded corners */
   padding: 20px;
   margin: 20px;
+  color: #ff5e5e; /* Red font color inside container */
 }
 
 .header {
@@ -25,13 +27,13 @@ body {
 }
 
 .title {
-  color: #403866;
+  color: #ff5e5e; /* Red title */
   font-size: 36px;
   margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #6e6e6e;
+  color: #ff5e5e; /* Red subtitle */
   font-size: 18px;
 }
 
@@ -41,7 +43,7 @@ body {
   padding: 12px;
   font-size: 16px;
   margin: 20px 0;
-  border: 1px solid #ccc;
+  border: 1px solid #ff5e5e; /* Red border */
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -62,20 +64,22 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-transform: uppercase;
+  color: #ffffff; /* White font color */
 }
 
 .register {
-  background-color: #827ffe; /* Adjust button colors */
+  background-color: #ffffff; /* White background */
+  color: #ff5e5e; /* Red text */
 }
 
 .login {
-  background-color: #403866; /* Adjust button colors */
+  background-color: #ff5e5e; /* Red background */
 }
 
 .message {
   text-align: center;
   color: #ffffff;
-  background-color: #9e9e9e;
+  background-color: #ff5e5e; /* Red background */
   padding: 10px;
   border-radius: 4px;
   margin-top: 20px;
@@ -88,7 +92,7 @@ body {
 .section-title {
   text-align: center;
   font-size: 24px;
-  color: #403866;
+  color: #ff5e5e; /* Red section title */
   margin-bottom: 30px;
 }
 
@@ -96,7 +100,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f9f9; /* Product card background */
+  background-color: #ffffff; /* White background */
+  color: #ff5e5e; /* Red text */
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -108,20 +113,20 @@ body {
 }
 
 .product-title {
-  color: #403866;
+  color: #ff5e5e; /* Red title */
   font-size: 20px;
   margin-bottom: 10px;
 }
 
 .product-description {
-  color: #6e6e6e;
+  color: #ff5e5e; /* Red description */
   font-size: 16px;
   line-height: 1.5;
 }
 
 .know-more-button {
-  background-color: #403866; /* Button color */
-  color: #ffffff;
+  background-color: #ff5e5e; /* Red button background */
+  color: #ffffff; /* White text */
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -130,7 +135,8 @@ body {
 }
 
 .know-more-button:hover {
-  background-color: #827ffe; /* Hover button color */
+  background-color: #ffffff; /* White background on hover */
+  color: #ff5e5e; /* Red text on hover */
 }
 
 .footer {
@@ -139,7 +145,7 @@ body {
 }
 
 .footer-text {
-  color: #6e6e6e;
+  color: #ffffff; /* White footer text */
   font-size: 14px;
 }
 
