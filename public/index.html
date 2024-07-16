@@ -1,55 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebAuthn</title>
-  <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fido Validation Demo</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <header class="header" id="header">
-      <h1 class="title">Fido Validation demo</h1>
-      <p class="subtitle">A demo of the Fido validation specification</p>
-      <input type="text" class="username" name="username" placeholder="Username">
-      <div class="button-container">
-        <button class="register">Register</button>
-        <button class="login">Log In</button>
-      </div>
-      <p class="message"></p>
+    <header class="header">
+        <h1 class="title">Fido Validation demo</h1>
+        <p class="subtitle">A demo of the Fido2 validation specification</p>
+        <div class="login-form">
+            <input type="text" placeholder="username" class="username">
+            <div class="button-container">
+                <button class="register">Register</button>
+                <button class="login">Authenticate</button>
+            </div>
+        </div>
     </header>
-    <section class="products-section" id="products">
-      <h2 class="section-title">Explore Products</h2>
-      <div class="product-card upper-left">
-        <div class="product-image"></div>
-        <div class="product-info">
-          <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
-          <p class="product-description">
-            AmbiSecure FIDO Validation server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.
-          </p>
-          <button class="know-more-button">Know more</button>
-        </div>
-      </div>
-      <div class="product-card lower-right">
-        <div class="product-image"></div>
-        <div class="product-info">
-          <h3 class="product-title">AmbiSecure One Pass card</h3>
-          <p class="product-description">
-            The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.
-          </p>
-          <button class="know-more-button">Know more</button>
-        </div>
-      </div>
-    </section>
+    <main>
+        <section class="products-section">
+            <h2 class="section-title">Explore Products</h2>
+            <div class="product-card">
+                <div class="product-icon"><img src="server-icon.png" alt="Server Icon"></div>
+                <div class="product-info">
+                    <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
+                    <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without hassle of recalling or typing passwords.</p>
+                </div>
+                <button class="know-more-button">Know more</button>
+            </div>
+            <div class="product-card">
+                <div class="product-icon"><img src="card-icon.png" alt="Card Icon"></div>
+                <div class="product-info">
+                    <h3 class="product-title">AmbiSecure One Pass card</h3>
+                    <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+                </div>
+                <button class="know-more-button">Know more</button>
+            </div>
+        </section>
+    </main>
     <footer class="footer">
-      <p class="footer-text">Sponsored by AmbiSecure Electronics</p>
+        <p class="footer-text">Sponsored by</p>
+        <img src="sponsor-logo.png" alt="Sponsor Logo">
     </footer>
-  </div>
-  <script src="index.js"></script>
 </body>
 </html>
