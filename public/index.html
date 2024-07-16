@@ -59,7 +59,7 @@
             gap: 10px;
         }
 
-        .login-button {
+        .login {
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -68,7 +68,7 @@
             color: white;
         }
 
-        .register-button {
+        .register {
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -160,11 +160,12 @@
             <h1 class="title">Fido Validation demo</h1>
             <p class="subtitle">A demo of the Fido2 validation specification</p>
             <div class="login-form">
-                <input type="text" placeholder="username" class="textbox">
+                <input type="text" class="username" name="username" placeholder="Username" />
                 <div class="button-container">
-                    <button class="register-button">Register</button>
-                    <button class="login-button">Authenticate</button>
+                   <button class="register">Register</button>
+				   <button class="login">Log In</button>
                 </div>
+                <p class="message"></p>
             </div>
         </header>
         <main>
