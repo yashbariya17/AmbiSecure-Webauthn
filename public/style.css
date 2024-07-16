@@ -1,88 +1,116 @@
-body {
-	margin: 0;
-	display: flex;
-	height: 100vh;
-	align-items: center;
-	justify-content: center;
-	font-family: 'Ubuntu', sans-serif;
+/* Reset some default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+/* Basic styles for the layout */
 .container {
-	width: 350px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-h1 {
-	color: #403866;
-	font-size: 30px;
-	line-height: 1.2;
-	text-align: center;
-	text-transform: uppercase;
+.header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.btn-row {
-	display: flex;
-	justify-content: space-between;
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-input {
-	height: 62px;
-	outline: none;
-	color: #403866;
-	display: block;
-	font-size: 18px;
-	line-height: 1.2;
-	font-weight: 700;
-	border-radius: 3px;
-	margin: 40px 0 15px 0;
-	padding: 0 20px 0 38px;
-	background-color: #e6e6e6;
-	border: 1px solid transparent;
-	width: -webkit-fill-available;
-	width: -moz-available;
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 20px;
 }
 
-input:focus {
-	transition: all 0.4s;
-	border: 1px solid #827ffe;
+.textbox {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
-button {
-	color: #fff;
-	height: 62px;
-	border: none;
-	padding: 0 20px;
-	font-size: 16px;
-	font-weight: 700;
-	line-height: 1.2;
-	border-radius: 3px;
-	transition: all 0.4s;
-	outline: none !important;
-	text-transform: uppercase;
-	background-color: #827ffe;
+.button-container {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-button:hover {
-	background-color: #403866;
+.login-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.register {
-	width: 60%;
+.login-button:hover {
+  background-color: #0056b3;
 }
 
-.login {
-	width: 35%;
+.products-section {
+  margin-top: 20px;
 }
 
-.message {
-	color: white;
-	padding: 10px;
-	min-height: 60px;
-	background: #9e9e9e;
-	border-radius: 3px;
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
-@media (max-width: 500px) {
-	.container {
-		width: 85vw;
-	}
+.product-card {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.product-image {
+  width: 150px;
+  height: 150px;
+  background-color: #f0f0f0;
+  margin-right: 20px;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.product-description {
+  color: #666;
+}
+
+.know-more-button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.know-more-button:hover {
+  background-color: #218838;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.footer-text {
+  color: #666;
+  font-size: 0.8rem;
 }
