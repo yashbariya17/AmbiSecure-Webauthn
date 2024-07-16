@@ -1,26 +1,202 @@
-<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>WebAuthn</title>
-		<script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
-		<link rel="stylesheet" href="style.css" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet" />
-	</head>
-	<body>
-		<div class="container">
-			<h1>WebAuthn</h1>
-			<input type="text" class="username" name="username" placeholder="Username" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fido Validation Demo</title>
+    <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .container {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #ff5e5e, white);
+            padding: 40px 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Center content horizontally */
+        }
+
+        .title {
+            color: white;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: white;
+            margin: 10px 0 20px;
+        }
+
+        .textbox {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            width: 300px; /* Adjust width */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #4a4a4a;
+            color: white;
+        }
+
+        .register-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .products-section {
+            padding: 50px 20px;
+            background-color: #f7f7f7;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            justify-items: center;
+            align-items: start;
+        }
+
+        .section-title {
+            grid-column: 1 / -1;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
+            width: 80%;
+        }
+
+        .product-card.upper-left {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+
+        .product-card.lower-right {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+        }
+
+        .product-info {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .product-description {
+            margin: 10px 0;
+        }
+
+        .know-more-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #ff5e5e;
+            color: white;
+        }
+
+        .footer {
+            padding: 20px;
+            background-color: #f7f7f7;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-text {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Fido Validation demo</h1>
+            <p class="subtitle">A demo of the Fido2 validation specification</p>
+            <div class="login-form">
+                <input type="text" class="username" name="username" placeholder="Username" />
 			<div class="btn-row">
 				<button class="register">Register</button>
 				<button class="login">Log In</button>
 			</div>
 			<p class="message"></p>
-		</div>
-		<script src="index.js"></script>
-	</body>
+            </div>
+        </header>
+        <main>
+            <section class="products-section">
+                <h2 class="section-title">Explore Products</h2>
+                <div class="product-card upper-left">
+                    <div class="product-info">
+                        <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
+                        <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without hassle of recalling or typing passwords.</p>
+                    </div>
+                    <button class="know-more-button">Know more</button>
+                </div>
+                <div class="product-card lower-right">
+                    <div class="product-info">
+                        <h3 class="product-title">AmbiSecure One Pass card</h3>
+                        <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+                    </div>
+                    <button class="know-more-button">Know more</button>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <p class="footer-text">Sponsored by</p>
+            <p class="sponsor-logo">[Sponsor Logo Here]</p>
+        </footer>
+    </div>
+    <script src="index.js"></script>
+</body>
 </html>
