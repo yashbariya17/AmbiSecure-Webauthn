@@ -160,11 +160,12 @@
             <h1 class="title">Fido Validation demo</h1>
             <p class="subtitle">A demo of the Fido2 validation specification</p>
             <div class="login-form">
-                <input type="text" placeholder="username" class="textbox">
-                <div class="button-container">
-                    <button class="register-button">Register</button>
-                    <button class="login-button">Authenticate</button>
-                </div>
+                <input type="text" class="username" name="username" placeholder="Username" />
+                <div class="btn-row">
+				<button class="register">Register</button>
+				<button class="login">Log In</button>
+                <p class="message"></p>
+			</div>
             </div>
         </header>
         <main>
@@ -191,5 +192,6 @@
             <p class="sponsor-logo">[Sponsor Logo Here]</p>
         </footer>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>
