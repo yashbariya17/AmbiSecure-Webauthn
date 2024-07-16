@@ -1,87 +1,159 @@
+/* Reset and general styling */
 body {
-	margin: 0;
-	display: flex;
-	height: 100vh;
-	align-items: center;
-	justify-content: center;
-	font-family: 'Ubuntu', sans-serif;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #f0f0f0; /* Adjust background color as needed */
 }
 
 .container {
-	width: 350px;
+  width: 90%;
+  max-width: 1200px; /* Adjust max-width as per design */
+  background-color: #ffffff; /* Adjust container background */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px;
+  margin: 20px;
 }
 
-h1 {
-	color: #403866;
-	font-size: 30px;
-	line-height: 1.2;
-	text-align: center;
-	text-transform: uppercase;
+.header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.btn-row {
-	display: flex;
-	justify-content: space-between;
+.title {
+  color: #403866;
+  font-size: 36px;
+  margin-bottom: 10px;
 }
 
-input {
-	height: 62px;
-	outline: none;
-	color: #403866;
-	display: block;
-	font-size: 18px;
-	line-height: 1.2;
-	font-weight: 700;
-	border-radius: 3px;
-	margin: 40px 0 15px 0;
-	padding: 0 20px 0 38px;
-	background-color: #e6e6e6;
-	border: 1px solid transparent;
-	width: -webkit-fill-available;
-	width: -moz-available;
+.subtitle {
+  color: #6e6e6e;
+  font-size: 18px;
 }
 
-input:focus {
-	transition: all 0.4s;
-	border: 1px solid #827ffe;
+.username {
+  height: 50px;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-button {
-	color: #fff;
-	height: 62px;
-	border: none;
-	padding: 0 20px;
-	font-size: 16px;
-	font-weight: 700;
-	line-height: 1.2;
-	border-radius: 3px;
-	transition: all 0.4s;
-	outline: none !important;
-	text-transform: uppercase;
-	background-color: #827ffe;
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-button:hover {
-	background-color: #403866;
+.button-container button {
+  height: 50px;
+  width: 150px; /* Adjust button width */
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
 }
 
 .register {
-	width: 60%;
+  background-color: #827ffe; /* Adjust button colors */
 }
 
 .login {
-	width: 35%;
+  background-color: #403866; /* Adjust button colors */
 }
 
 .message {
-	color: white;
-	padding: 10px;
-	min-height: 60px;
-	background: #9e9e9e;
-	border-radius: 3px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #9e9e9e;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 20px;
 }
 
-@media (max-width: 500px) {
-	.container {
-		width: 85vw;
-	}
+.products-section {
+  margin-top: 40px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 24px;
+  color: #403866;
+  margin-bottom: 30px;
+}
+
+.product-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9; /* Product card background */
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.product-info {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.product-title {
+  color: #403866;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.product-description {
+  color: #6e6e6e;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.know-more-button {
+  background-color: #403866; /* Button color */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.know-more-button:hover {
+  background-color: #827ffe; /* Hover button color */
+}
+
+.footer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.footer-text {
+  color: #6e6e6e;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .button-container button {
+    width: 100%;
+  }
+}
+
