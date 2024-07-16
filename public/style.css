@@ -6,19 +6,18 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Ubuntu', sans-serif;
-  background-color: #ff5e5e; /* Red background */
-  color: #ffffff; /* White font color */
+  color: #ff5e5e; /* Red font color */
 }
 
 .container {
   width: 90%;
   max-width: 1200px; /* Adjust max-width as per design */
-  background-color: #ffffff; /* White background for container */
+  background-color: #ff5e5e; /* Red background for container */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
   border-radius: 8px; /* Rounded corners */
   padding: 20px;
   margin: 20px;
-  color: #ff5e5e; /* Red font color inside container */
+  color: #ffffff; /* White font color inside container */
 }
 
 .header {
@@ -27,13 +26,13 @@ body {
 }
 
 .title {
-  color: #ff5e5e; /* Red title */
+  color: #ffffff; /* White title */
   font-size: 36px;
   margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #ff5e5e; /* Red subtitle */
+  color: #ffffff; /* White subtitle */
   font-size: 18px;
 }
 
@@ -43,7 +42,7 @@ body {
   padding: 12px;
   font-size: 16px;
   margin: 20px 0;
-  border: 1px solid #ff5e5e; /* Red border */
+  border: 1px solid #ffffff; /* White border */
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -64,22 +63,23 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-transform: uppercase;
-  color: #ffffff; /* White font color */
+  color: #ff5e5e; /* Red font color */
 }
 
 .register {
+  background-color: #ff5e5e; /* Red background */
+  color: #ffffff; /* White text */
+}
+
+.login {
   background-color: #ffffff; /* White background */
   color: #ff5e5e; /* Red text */
 }
 
-.login {
-  background-color: #ff5e5e; /* Red background */
-}
-
 .message {
   text-align: center;
-  color: #ffffff;
-  background-color: #ff5e5e; /* Red background */
+  color: #ff5e5e; /* Red text */
+  background-color: #ffffff; /* White background */
   padding: 10px;
   border-radius: 4px;
   margin-top: 20px;
@@ -92,7 +92,7 @@ body {
 .section-title {
   text-align: center;
   font-size: 24px;
-  color: #ff5e5e; /* Red section title */
+  color: #ffffff; /* White section title */
   margin-bottom: 30px;
 }
 
@@ -100,8 +100,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff; /* White background */
-  color: #ff5e5e; /* Red text */
+  background-color: #ff5e5e; /* Red background */
+  color: #ffffff; /* White text */
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -113,20 +113,20 @@ body {
 }
 
 .product-title {
-  color: #ff5e5e; /* Red title */
+  color: #ffffff; /* White title */
   font-size: 20px;
   margin-bottom: 10px;
 }
 
 .product-description {
-  color: #ff5e5e; /* Red description */
+  color: #ffffff; /* White description */
   font-size: 16px;
   line-height: 1.5;
 }
 
 .know-more-button {
-  background-color: #ff5e5e; /* Red button background */
-  color: #ffffff; /* White text */
+  background-color: #ffffff; /* White button background */
+  color: #ff5e5e; /* Red text */
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -135,8 +135,8 @@ body {
 }
 
 .know-more-button:hover {
-  background-color: #ffffff; /* White background on hover */
-  color: #ff5e5e; /* Red text on hover */
+  background-color: #ff5e5e; /* Red background on hover */
+  color: #ffffff; /* White text on hover */
 }
 
 .footer {
@@ -145,7 +145,7 @@ body {
 }
 
 .footer-text {
-  color: #ffffff; /* White footer text */
+  color: #ff5e5e; /* Red footer text */
   font-size: 14px;
 }
 
