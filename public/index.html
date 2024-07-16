@@ -7,39 +7,41 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="header">
-        <h1 class="title">Fido Validation demo</h1>
-        <p class="subtitle">A demo of the Fido2 validation specification</p>
-        <div class="login-form">
-            <input type="text" placeholder="username" class="username">
-            <div class="button-container">
-                <button class="register">Register</button>
-                <button class="login">Authenticate</button>
-            </div>
-        </div>
-    </header>
-    <main>
-        <section class="products-section">
-            <h2 class="section-title">Explore Products</h2>
-            <div class="product-card">
-                <div class="product-info">
-                    <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
-                    <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without hassle of recalling or typing passwords.</p>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Fido Validation demo</h1>
+            <p class="subtitle">A demo of the Fido2 validation specification</p>
+            <div class="login-form">
+                <input type="text" placeholder="username" class="textbox">
+                <div class="button-container">
+                    <button class="register-button">Register</button>
+                    <button class="login-button">Authenticate</button>
                 </div>
-                <button class="know-more-button">Know more</button>
             </div>
-            <div class="product-card">
-                <div class="product-info">
-                    <h3 class="product-title">AmbiSecure One Pass card</h3>
-                    <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+        </header>
+        <main>
+            <section class="products-section">
+                <h2 class="section-title">Explore Products</h2>
+                <div class="product-card upper-left">
+                    <div class="product-info">
+                        <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
+                        <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without hassle of recalling or typing passwords.</p>
+                    </div>
+                    <button class="know-more-button">Know more</button>
                 </div>
-                <button class="know-more-button">Know more</button>
-            </div>
-        </section>
-    </main>
-    <footer class="footer">
-        <p class="footer-text">Sponsored by</p>
-        <p class="sponsor-logo">[Sponsor Logo Here]</p>
-    </footer>
+                <div class="product-card lower-right">
+                    <div class="product-info">
+                        <h3 class="product-title">AmbiSecure One Pass card</h3>
+                        <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+                    </div>
+                    <button class="know-more-button">Know more</button>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <p class="footer-text">Sponsored by</p>
+            <p class="sponsor-logo">[Sponsor Logo Here]</p>
+        </footer>
+    </div>
 </body>
 </html>
