@@ -10,61 +10,49 @@ function displayMessage(msg) {
 }
 
 async function myfetch(url, payload) {
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    return response.json();
-
-  } catch (error) {
-    console.error("Fetch error:", error);
-    throw error;
-  }
+  return await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" },
+  }).then((res) => {
+    // console.log(res.json())
+  return  res.json()
+  });
 }
 
 regBtn.addEventListener("click", async () => {
   displayMessage("");
 
-  try {
-    const challenge = await myfetch("https://webauthn-node.onrender.com/register", { username: unameInput.value });
-    const signedChallenge = await startRegistration(challenge);
+  const challenge = await myfetch("https://webauthn-node.onrender.com/register", { username: unameInput.value });
 
-    const verification = await myfetch("https://webauthn-node.onrender.com/register/complete", signedChallenge);
+  let signedChallenge = await startRegistration(challenge).catch((error) => {
+    displayMessage(error);
+    throw error;
+  });
 
-    if (verification?.verified) {
-      displayMessage("Registration Success!");
-    } else {
-      displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
-    }
+  const verification = await myfetch("https://webauthn-node.onrender.com/register/complete", signedChallenge);
 
-  } catch (error) {
-    displayMessage(error.message);
+  if (verification?.verified) {
+    displayMessage("Success!");
+  } else {
+    displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
 });
 
 loginBtn.addEventListener("click", async () => {
   displayMessage("");
+  const challenge = await myfetch("/login", { username: unameInput.value });
 
-  try {
-    const challenge = await myfetch("https://webauthn-node.onrender.com/login", { username: unameInput.value });
-    const signedChallenge = await startAuthentication(challenge);
+  let signedChallenge = await startAuthentication(challenge).catch((error) => {
+    displayMessage(error);
+    throw error;
+  });
 
-    const verification = await myfetch("https://webauthn-node.onrender.com/login/complete", signedChallenge);
+  const verification = await myfetch("/login/complete", signedChallenge);
 
-    if (verification?.verified) {
-      displayMessage("Login Success!");
-    } else {
-      displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
-    }
-
-  } catch (error) {
-    displayMessage(error.message);
+  if (verification?.verified) {
+    displayMessage("Success!");
+  } else {
+    displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
 });
