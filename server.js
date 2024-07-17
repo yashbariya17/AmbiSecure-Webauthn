@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const fetch = require("node-fetch"); // Ensure you have this package installed
+const fetch = require("node-fetch");
 const {
   verifyRegistrationResponse,
   generateRegistrationOptions,
@@ -17,6 +17,8 @@ const localStorage = new LocalStorage("./db");
 
 app.use(express.json());
 app.use(express.static("./public/"));
+
+// Session middleware configuration
 app.use(
   session({
     resave: false,
@@ -32,22 +34,23 @@ app.use(
   })
 );
 
-const port = 3000;
+// CORS configuration to allow requests from your frontend origin
+const cors = require('cors');
 const rpID = "webauthn-node.onrender.com";
 const origin = `https://${rpID}`;
+app.use(cors({
+  origin: origin,
+  credentials: true, // Required for allowing credentials (cookies, sessions) to be sent cross-origin
+}));
+
+const port = 3000;
 const rpName = "WebAuthn Tutorial";
-const expectedOrigin = `${origin}`;
-// https://webauthn-node.onrender.com
+const expectedOrigin = origin;
 
-app.get('/listen', (req, res) => {
-  res.send('Helllo...');
-});
-
+// Endpoint for initiating registration
 app.post("/register", async (req, res) => {
-  // console.log("Register request received:", req.body)
-
-  let user;
   try {
+    // Fetch user data from your backend
     let userData = await fetch('http://18.215.166.62/register', {
       method: "POST",
       body: JSON.stringify({ username: req.body.username }),
@@ -59,66 +62,55 @@ app.post("/register", async (req, res) => {
     }
 
     userData = await userData.json();
-    if (userData.length > 0 && userData != null) {
-      const formattedData = {
-        passKeys: [
-          {
-            counter: userData[0].counter,
-            id: userData[0].id,
-            backedUp: !(!userData[0].backedUp),
-            webAuthnUserID: userData[0].webAuthnUserID,
-            deviceType: userData[0].deviceType,
-            transports: userData[0].transport
-              ? userData[0].transport.split(",")
-              : [],
-            credentialPublicKey: userData[0].credentialPublicKey
-              ? userData[0].credentialPublicKey.split(",")
-              : [],
-          },
-        ],
-        username: userData[0].username,
-      };
-      user = formattedData;
-    } else {
-      user = {
-        passKeys: [],
-        username: req.body.username,
-      };
-    }
+
+    // Format user data for registration options
+    const formattedData = {
+      passKeys: userData.map(data => ({
+        counter: data.counter,
+        id: data.id,
+        backedUp: !!data.backedUp,
+        webAuthnUserID: data.webAuthnUserID,
+        deviceType: data.deviceType,
+        transports: data.transport ? data.transport.split(",") : [],
+        credentialPublicKey: data.credentialPublicKey ? data.credentialPublicKey.split(",") : [],
+      })),
+      username: req.body.username,
+    };
+
+    const { username: userName, passKeys } = formattedData;
+
+    // Generate registration options
+    const opts = {
+      rpID,
+      rpName,
+      userName,
+      attestationType: "none",
+      supportedAlgorithmIDs: [-7, -257],
+      authenticatorSelection: {
+        residentKey: "discouraged",
+      },
+      excludeCredentials: passKeys?.map((key) => ({
+        id: key.id,
+        transports: key.transports,
+      })),
+    };
+
+    const options = await generateRegistrationOptions(opts);
+
+    // Store user data and registration options in session
+    req.session.challenge = { user: formattedData, options };
+    res.json(options);
+
   } catch (err) {
     console.error("Error fetching registration data:", err);
-    return res.status(500).send({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
-
-  const uname = req.body.username;
-  const { username: userName, passKeys } = user;
-
-  const opts = {
-    rpID,
-    rpName,
-    userName,
-    attestationType: "none",
-    supportedAlgorithmIDs: [-7, -257],
-    authenticatorSelection: {
-      residentKey: "discouraged",
-    },
-    excludeCredentials: passKeys?.map((key) => ({
-      id: key.id,
-      transports: key.transports,
-    })),
-  };
-  const options = await generateRegistrationOptions(opts);
-
-  req.session.challenge = { user, options };
-  res.send(options);
 });
 
+// Endpoint for completing registration
 app.post("/register/complete", async (req, res) => {
-  // console.log("Register complete request received:", req.body)
-
   const response = req.body;
   const { options, user } = req.session.challenge;
-  // console.log('\t\t\theloooooo', user.passKeys)
 
   const opts = {
     response,
@@ -128,76 +120,49 @@ app.post("/register/complete", async (req, res) => {
     expectedChallenge: options.challenge,
   };
 
-  let verification;
   try {
-    verification = await verifyRegistrationResponse(opts);
-  } catch (error) {
-    console.error(error);
-    return res.status(400).send({ error: error.message });
-  }
+    // Verify registration response
+    const verification = await verifyRegistrationResponse(opts);
 
-  const { verified, registrationInfo } = verification;
+    if (verification.verified && verification.registrationInfo) {
+      const { counter, credentialID, credentialBackedUp, credentialPublicKey, credentialDeviceType } = verification.registrationInfo;
 
-  if (verified && registrationInfo) {
-    const {
-      counter,
-      credentialID,
-      credentialBackedUp,
-      credentialPublicKey,
-      credentialDeviceType,
-    } = registrationInfo;
+      console.log("Registration Info:", verification.registrationInfo);
 
-    console.log("Registration Info:", registrationInfo);
-
-    const passKey = user.passKeys.find((key) => key.id === credentialID);
-
-    if (!passKey || passKey.length === 0) {
-      user.passKeys.push({
-        counter,
-        id: credentialID,
-        backedUp: credentialBackedUp,
-        webAuthnUserID: options.user.id,
-        deviceType: credentialDeviceType,
-        transports: response.response.transports,
-        credentialPublicKey: Array.from(credentialPublicKey),
-      });
-    }
-
-    try {
-      const payload = JSON.stringify({ challenge: req.session.challenge, verification: verification, transport: response.response.transports });
-
-      console.log(payload);
-
-      const passKeys = user.passKeys[0]; // Assuming only one passKey per user
-      const query = await fetch('http://18.215.166.62/register/complete', {
-        method: "POST",
-        body: payload,
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      if (!query.ok) {
-        throw new Error(`Failed to complete registration: ${query.statusText}`);
+      // Update user data with new registration info
+      const passKeyIndex = user.passKeys.findIndex(key => key.id === credentialID);
+      if (passKeyIndex === -1) {
+        user.passKeys.push({
+          counter,
+          id: credentialID,
+          backedUp: credentialBackedUp,
+          webAuthnUserID: options.user.id,
+          deviceType: credentialDeviceType,
+          transports: response.response.transports,
+          credentialPublicKey: Array.from(credentialPublicKey),
+        });
       }
 
-      console.log("Data inserted successfully.");
-    } catch (err) {
-      // Rollback transaction on error
-      console.error("Error inserting data:", err);
-    }
-    // localStorage.setItem(user.username, JSON.stringify(user));
-  }
+      // Store updated user data (assuming you persist this data)
+      // Example: await localStorage.setItem(user.username, JSON.stringify(user));
 
-  req.session.challenge = undefined;
-  res.send({ verified });
+      // Clear session challenge
+      req.session.challenge = undefined;
+      res.json({ verified: true });
+    } else {
+      res.status(400).json({ error: "Registration verification failed" });
+    }
+
+  } catch (error) {
+    console.error("Error verifying registration:", error);
+    res.status(400).json({ error: error.message });
+  }
 });
 
+// Endpoint for initiating login
 app.post("/login", async (req, res) => {
-  console.log("Login request received:", req.body);
-  let user;
-
   try {
+    // Fetch user data for login
     const userData = await fetch('http://18.215.166.62/login', {
       method: "POST",
       body: JSON.stringify({ username: req.body.username }),
@@ -208,55 +173,43 @@ app.post("/login", async (req, res) => {
       throw new Error(`Failed to fetch user data: ${userData.statusText}`);
     }
 
-    const responseText = await userData.text();
-    console.log("Response Text:", responseText);
+    const user = await userData.json();
 
-    user = JSON.parse(responseText);
-
-    // Check if the user is found
-    if (!user || user.length === 0) {
-      return res.status(404).send({ error: "User not found" });
+    // Check if user and passKeys are available
+    if (!user || user.length === 0 || !user.passKeys || user.passKeys.length === 0) {
+      return res.status(400).json({ error: "Invalid user or no passkeys found" });
     }
 
-    // Ensure user.passKeys is defined
-    if (!user.passKeys || user.passKeys.length === 0) {
-      return res.status(400).send({ error: "No passkeys found for user" });
-    }
+    const opts = {
+      rpID,
+      allowCredentials: user.passKeys.map(key => ({
+        id: key.id,
+        transports: key.transports,
+      })),
+    };
+
+    // Generate authentication options
+    const options = await generateAuthenticationOptions(opts);
+
+    // Store user data and authentication options in session
+    req.session.challenge = { user, options };
+    res.json(options);
 
   } catch (err) {
-    console.error("Error fetching data:", err);
-    return res.status(500).send({ error: "Internal server error" });
+    console.error("Error fetching user data:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
-
-  console.log(user);
-
-  const opts = {
-    rpID,
-    allowCredentials: user.passKeys.map((key) => ({
-      id: key.id,
-      transports: key.transports,
-    })),
-  };
-  const options = await generateAuthenticationOptions(opts);
-
-  req.session.challenge = { user, options };
-  res.send(options);
 });
 
+// Endpoint for completing login
 app.post("/login/complete", async (req, res) => {
-  console.log("Login complete request received:", req.body);
-
   const { options, user } = req.session.challenge;
   const body = req.body;
 
-  const passKey = user.passKeys.find((key) => key.id === body.id);
+  const passKey = user.passKeys.find(key => key.id === body.id);
   if (!passKey) {
-    return res
-      .status(400)
-      .send({ error: `Could not find passkey ${body.id} for user ${user.id}` });
+    return res.status(400).json({ error: `Could not find passkey ${body.id} for user ${user.id}` });
   }
-
-  console.log("PassKey Info:", passKey);
 
   const opts = {
     response: body,
@@ -267,28 +220,29 @@ app.post("/login/complete", async (req, res) => {
     expectedChallenge: options.challenge,
   };
 
-  let verification;
   try {
-    verification = await verifyAuthenticationResponse(opts);
+    // Verify authentication response
+    const verification = await verifyAuthenticationResponse(opts);
+
+    if (verification.verified) {
+      passKey.counter = verification.authenticationInfo.newCounter;
+      // Update user data with new counter (assuming you persist this data)
+      // Example: await localStorage.setItem(user.username, JSON.stringify(user));
+
+      // Clear session challenge
+      req.session.challenge = undefined;
+      res.json({ verified: true });
+    } else {
+      res.status(400).json({ error: "Authentication verification failed" });
+    }
+
   } catch (error) {
-    console.error(error);
-    return res.status(400).send({ error: error.message });
+    console.error("Error verifying authentication:", error);
+    res.status(400).json({ error: error.message });
   }
-
-  const { verified, authenticationInfo } = verification;
-
-  if (verified) {
-    passKey.counter = authenticationInfo.newCounter;
-    user.passKeys = user.passKeys.map((i) => (i.id == passKey.id ? passKey : i));
-    
-    console.log('\n\n\n', user);
-    // localStorage.setItem(user.username, JSON.stringify(user));
-  }
-
-  req.session.challenge = undefined;
-  res.send({ verified });
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`🚀 Server ready on port ${port}`);
 });
