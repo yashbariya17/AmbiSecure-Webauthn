@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fido Validation Demo</title>
   <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
   <link rel="stylesheet" href="style.css" />
@@ -13,8 +8,7 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Ubuntu', sans-serif;
-      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
     }
 
     button {
@@ -28,43 +22,34 @@
 
     .container {
       text-align: center;
-      font-family: 'Ubuntu', sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     .header {
-      padding: 40px 20px;
-      height: 100vh;
-      display: flex;
+	@@ -30,24 +38,17 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      /* Center content horizontally */
     }
 
     .title {
-      color: #ff5e5e;
-      font-size: 2.5em;
-      margin-bottom: 10px;
+      color: white;
+      font-size: 2em;
     }
 
     .subtitle {
-      color: #555;
+      color: white;
       margin: 10px 0 20px;
-      font-size: 1.2em;
     }
 
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .username {
-      padding: 10px;
-      border: 1px solid #ccc;
+    .textbox {
+	@@ -56,12 +57,13 @@
       border-radius: 5px;
       font-size: 1em;
       margin-bottom: 20px;
       width: 300px;
+      /* Adjust width */
     }
 
     .button-container {
@@ -73,93 +58,68 @@
       gap: 10px;
     }
 
-    .login-button,
-    .register-button {
-      padding: 10px 20px;
+	@@ -70,42 +72,27 @@
       border: none;
       border-radius: 5px;
       font-size: 1em;
-    }
-
-    .login-button {
       background-color: #4a4a4a;
       color: white;
     }
 
     .register-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
       background-color: white;
       color: black;
-      border: 1px solid #ccc;
+      text-decoration: none;
+      display: inline-block;
     }
 
     .products-section {
       padding: 50px 20px;
+      background-color: #f7f7f7;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto auto;
       gap: 20px;
       justify-items: center;
       align-items: start;
-    }
-
-    .section-title {
+	@@ -115,6 +102,15 @@
       grid-column: 1 / -1;
       margin-bottom: 20px;
       font-size: 1.5em;
       text-align: center;
     }
 
+    .message {
+      color: white;
+      padding: 10px;
+      min-height: 60px;
+      background: #9e9e9e;
+      border-radius: 3px;
+    }
+
     .product-card {
-      background: white;
-      border: 1px solid #e0e0e0;
-      border-radius: 10px;
-      padding: 20px;
-      display: flex;
+	@@ -126,8 +122,7 @@
       flex-direction: column;
       align-items: center;
       text-align: left;
       width: 80%;
     }
 
-    .product-info {
-      text-align: center;
-      flex-grow: 1;
-    }
-
-    .product-title {
-      margin: 0;
-      font-size: 1.2em;
-      color: #333;
-    }
-
-    .product-description {
-      margin: 10px 0;
-      color: #666;
-    }
-
-    .know-more-button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
+    .product-card.upper-left {
+	@@ -161,12 +156,6 @@
       font-size: 1em;
       background-color: #ff5e5e;
       color: white;
     }
 
     .footer {
-      padding: 20px;
-      background-color: #f7f7f7;
-      text-align: center;
-      margin-top: 20px;
-    }
-
+	@@ -179,25 +168,19 @@
     .footer-text {
       margin: 0;
-      color: #555;
-    }
-
-    .sponsor-logo {
-      margin-top: 10px;
     }
   </style>
 </head>
@@ -167,30 +127,28 @@
 <body>
   <div class="container">
     <header class="header">
-      <h1 class="title">Fido Validation Demo</h1>
+      <h1 class="title">Fido Validation demo</h1>
       <p class="subtitle">A demo of the Fido2 validation specification</p>
       <div class="login-form">
         <input type="text" class="username" name="username" placeholder="Username" />
         <div class="button-container">
-          <button class="register-button">Register</button>
-          <button class="login-button">Authenticate</button>
+          <button class="register">Register</button>
+          <button class="login">Authenticate</button>
         </div>
         <p class="message"></p>
       </div>
-    </header>
-    <main>
-      <section class="products-section">
+	@@ -207,21 +190,21 @@ <h1 class="title">Fido Validation Demo</h1>
         <h2 class="section-title">Explore Products</h2>
-        <div class="product-card">
+        <div class="product-card upper-left">
           <div class="product-info">
             <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
             <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling multi-factor
               authentication. It enables a service provider to securely and seamlessly authenticate its users without
-              the hassle of recalling or typing passwords.</p>
+              hassle of recalling or typing passwords.</p>
           </div>
           <button class="know-more-button">Know more</button>
         </div>
-        <div class="product-card">
+        <div class="product-card lower-right">
           <div class="product-info">
             <h3 class="product-title">AmbiSecure One Pass card</h3>
             <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless
