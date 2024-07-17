@@ -1,4 +1,10 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Fido Validation Demo</title>
   <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
   <link rel="stylesheet" href="style.css" />
@@ -26,7 +32,10 @@
     }
 
     .header {
-	@@ -30,24 +38,17 @@
+      background: linear-gradient(to bottom, #ff5e5e, white);
+      padding: 40px 20px;
+      height: 100vh;
+      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -44,7 +53,8 @@
     }
 
     .textbox {
-	@@ -56,12 +57,13 @@
+      padding: 10px;
+      border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 1em;
       margin-bottom: 20px;
@@ -58,7 +68,8 @@
       gap: 10px;
     }
 
-	@@ -70,42 +72,27 @@
+    .login {
+      padding: 10px 20px;
       border: none;
       border-radius: 5px;
       font-size: 1em;
@@ -66,7 +77,7 @@
       color: white;
     }
 
-    .register-button {
+    .register {
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
@@ -86,23 +97,21 @@
       gap: 20px;
       justify-items: center;
       align-items: start;
-	@@ -115,6 +102,15 @@
+    }
+
+    .section-title {
       grid-column: 1 / -1;
       margin-bottom: 20px;
       font-size: 1.5em;
       text-align: center;
     }
 
-    .message {
-      color: white;
-      padding: 10px;
-      min-height: 60px;
-      background: #9e9e9e;
-      border-radius: 3px;
-    }
-
     .product-card {
-	@@ -126,8 +122,7 @@
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
       flex-direction: column;
       align-items: center;
       text-align: left;
@@ -110,14 +119,45 @@
     }
 
     .product-card.upper-left {
-	@@ -161,12 +156,6 @@
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    .product-card.lower-right {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
+
+    .product-info {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .product-title {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    .product-description {
+      margin: 10px 0;
+    }
+
+    .know-more-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
       font-size: 1em;
       background-color: #ff5e5e;
       color: white;
     }
 
     .footer {
-	@@ -179,25 +168,19 @@
+      padding: 20px;
+      background-color: #f7f7f7;
+      text-align: center;
+      margin-top: 20px;
+    }
+
     .footer-text {
       margin: 0;
     }
@@ -133,11 +173,13 @@
         <input type="text" class="username" name="username" placeholder="Username" />
         <div class="button-container">
           <button class="register">Register</button>
-          <button class="login">Authenticate</button>
+          <button class="login">Log In</button>
         </div>
         <p class="message"></p>
       </div>
-	@@ -207,21 +190,21 @@ <h1 class="title">Fido Validation Demo</h1>
+    </header>
+    <main>
+      <section class="products-section">
         <h2 class="section-title">Explore Products</h2>
         <div class="product-card upper-left">
           <div class="product-info">
