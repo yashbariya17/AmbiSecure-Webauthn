@@ -43,6 +43,10 @@ app.get('/listen', (req, res) => {
   res.send('Helllo...');
 });
 
+app.get('/loggedin', (req, res) => {
+  res.sendFile(__dirname + '/public/loggedin.html');
+})
+
 app.post("/register", async (req, res) => {
   // console.log("Register request received:", req.body)
 
