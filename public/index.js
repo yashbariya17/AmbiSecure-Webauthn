@@ -55,8 +55,9 @@ loginBtn.addEventListener("click", async () => {
 
   if (verification?.verified) {
     displayMessage("Success!");
-    window.location.href = "https://webauthn-node.onrender.com/loggedin.html"
-    document.getElementById("name").innerHTML = "I have changed!";
+    // Store the username in localStorage before redirecting
+    localStorage.setItem('username', unameInput.value);
+    window.location.href = "https://webauthn-node.onrender.com/loggedin.html";
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
