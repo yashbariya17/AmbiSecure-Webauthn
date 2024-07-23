@@ -5,15 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Fido Validation Demo</title>
-    <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet" />
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Ubuntu', Arial, sans-serif;
         }
 
         button {
@@ -27,7 +22,7 @@
 
         .container {
             text-align: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Ubuntu', Arial, sans-serif;
         }
 
         .header {
@@ -67,16 +62,15 @@
             border-radius: 10px;
             padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: left;
+            flex-direction: row; /* Ensure flex direction is row */
+            align-items: center; /* Align items in center vertically */
             width: 80%;
-            gap: 20px;
         }
 
         .product-info {
             text-align: left;
             flex-grow: 1;
+            margin-left: 20px; /* Add margin to separate image and text */
         }
 
         .product-title {
@@ -126,13 +120,14 @@
             max-width: 100px;
             max-height: 100px;
             margin-bottom: 0;
+            flex-shrink: 0; /* Prevent image from shrinking */
         }
 
         .terminal-box {
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            height: 200px;
             border: 1px solid #ccc;
-            overflow-y: scroll;
+            overflow-y: auto;
             padding: 10px;
             margin-bottom: 20px;
         }
@@ -141,7 +136,7 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1 class="title">Fido Validation demo</h1>
+            <h1 class="title">Fido Validation Demo</h1>
             <div class="terminal-box">
                 <!-- This is where your terminal logs will appear -->
             </div>
@@ -152,15 +147,15 @@
                 <div class="product-card">
                     <img src="./network.png" alt="Product Image" class="product-image">
                     <div class="product-info">
-                        <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
-                        <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.</p>
+                        <h3 class="product-title">AmbiSecure FIDO Validation Server</h3>
+                        <p class="product-description">AmbiSecure FIDO Validation Server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.</p>
                     </div>
                     <button class="know-more-button">Know more</button>
                 </div>
                 <div class="product-card">
                     <img src="./id.png" alt="Product Image" class="product-image">
                     <div class="product-info">
-                        <h3 class="product-title">AmbiSecure One Pass card</h3>
+                        <h3 class="product-title">AmbiSecure One Pass Card</h3>
                         <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
                     </div>
                     <button class="know-more-button">Know more</button>
@@ -174,6 +169,5 @@
             </div>
         </footer>
     </div>
-    <script src="index.js"></script>
 </body>
 </html>
