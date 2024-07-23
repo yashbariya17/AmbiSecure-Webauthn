@@ -34,7 +34,7 @@ regBtn.addEventListener("click", async () => {
 
   if (verification?.verified) {
     displayMessage("Success!");
-    window.location = "https://www.webauthn-node.onrender.com/loggedIn.html"; // Redirect to logged in page
+    window.href = "https://www.webauthn-node.onrender.com/loggedIn.html"; // Redirect to logged in page
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
