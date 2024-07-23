@@ -104,23 +104,19 @@
             text-align: center;
         }
 
-        .product-card {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 30px;
-            /* Increase padding for more space */
-            display: flex;
-            flex-direction: column;
-            /* Stack content vertically */
-            align-items: center;
-            /* Center items horizontally */
-            text-align: center;
-            width: 90%;
-            /* Adjust width as needed */
-            max-width: 400px;
-            /* Limit maximum width */
-        }
+.product-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 30px; /* Increase padding for more space */
+    display: flex;
+    flex-direction: row; /* Ensure landscape orientation */
+    align-items: center; /* Center items vertically */
+    text-align: left;
+    width: 90%; /* Adjust width as needed */
+    max-width: 600px; /* Limit maximum width */
+}
+
 
         .product-card.upper-left {
             grid-column: 1 / 2;
@@ -132,27 +128,21 @@
             grid-row: 2 / 3;
         }
 
-        .product-info {
-            text-align: center;
-            flex-grow: 1;
-            margin-top: 20px;
-            /* Add space between image and text */
-        }
+.product-info {
+    flex-grow: 1;
+    margin-left: 20px; /* Add space between image and text */
+}
 
-        .product-title {
-            margin: 0;
-            font-size: 1.5em;
-            /* Increase font size */
-        }
+.product-title {
+    margin: 0;
+    font-size: 1.5em; /* Increase font size */
+}
 
-        .product-description {
-            margin: 15px 0;
-            /* Adjust margin */
-            font-size: 1em;
-            /* Increase font size */
-            line-height: 1.4;
-            /* Improve line spacing */
-        }
+.product-description {
+    margin: 10px 0; /* Adjust margin */
+    font-size: 1em; /* Increase font size */
+    line-height: 1.4; /* Improve line spacing */
+}
 
         .know-more-button {
             padding: 10px 20px;
@@ -189,14 +179,12 @@
             max-height: 100%;
         }
 
-        .product-image {
-            width: 100px;
-            /* Keep a fixed width for the image */
-            height: 100px;
-            /* Keep a fixed height for the image */
-            margin-bottom: 15px;
-            /* Adjust margin */
-        }
+.product-image {
+    width: 150px; /* Set a fixed width for the image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Ensure rounded corners */
+    margin-right: 20px; /* Add space between image and text */
+}
     </style>
 </head>
 
