@@ -28,7 +28,6 @@
         .header {
             background: linear-gradient(to bottom, #ff5e5e, white);
             padding: 40px 20px;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -38,6 +37,13 @@
         .title {
             color: white;
             font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .logged-in {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         .section-title {
@@ -47,7 +53,7 @@
         }
 
         .products-section {
-            padding: 50px 20px;
+            padding: 20px 20px;
             background-color: #f7f7f7;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -62,15 +68,15 @@
             border-radius: 10px;
             padding: 20px;
             display: flex;
-            flex-direction: row; /* Ensure flex direction is row */
-            align-items: center; /* Align items in center vertically */
+            flex-direction: column; /* Ensure flex direction is column */
+            align-items: center; /* Align items in center horizontally */
             width: 80%;
         }
 
         .product-info {
             text-align: left;
             flex-grow: 1;
-            margin-left: 20px; /* Add margin to separate image and text */
+            margin-top: 20px; /* Add margin to separate image and text */
         }
 
         .product-title {
@@ -89,6 +95,7 @@
             font-size: 1em;
             background-color: #ff5e5e;
             color: white;
+            margin-top: 10px;
         }
 
         .footer {
@@ -96,6 +103,7 @@
             justify-content: center;
             align-items: center;
             height: 100px;
+            margin-top: 20px;
         }
 
         .footer-text {
@@ -119,7 +127,7 @@
         .product-image {
             max-width: 100px;
             max-height: 100px;
-            margin-bottom: 0;
+            margin-bottom: 20px; /* Add margin to separate image and text */
             flex-shrink: 0; /* Prevent image from shrinking */
         }
 
@@ -137,6 +145,7 @@
     <div class="container">
         <header class="header">
             <h1 class="title">Fido Validation Demo</h1>
+            <div class="logged-in">Logged in</div>
             <div class="terminal-box">
                 <!-- This is where your terminal logs will appear -->
             </div>
@@ -149,16 +158,16 @@
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure FIDO Validation Server</h3>
                         <p class="product-description">AmbiSecure FIDO Validation Server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.</p>
+                        <button class="know-more-button">Know more</button>
                     </div>
-                    <button class="know-more-button">Know more</button>
                 </div>
                 <div class="product-card">
                     <img src="./id.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure One Pass Card</h3>
                         <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+                        <button class="know-more-button">Know more</button>
                     </div>
-                    <button class="know-more-button">Know more</button>
                 </div>
             </section>
         </main>
