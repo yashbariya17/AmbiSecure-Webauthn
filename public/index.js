@@ -34,7 +34,6 @@ regBtn.addEventListener("click", async () => {
 
   if (verification?.verified) {
     displayMessage("Success!");
-   window.location.pathname = "./loggedin.html/";
 
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
