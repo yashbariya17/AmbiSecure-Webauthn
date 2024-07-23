@@ -56,6 +56,7 @@ loginBtn.addEventListener("click", async () => {
   if (verification?.verified) {
     displayMessage("Success!");
     window.location.href = "https://webauthn-node.onrender.com/loggedin.html"
+    document.getElementById("name").innerHTML = "I have changed!";
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
