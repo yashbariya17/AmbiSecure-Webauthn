@@ -25,6 +25,7 @@ regBtn.addEventListener("click", async () => {
   let signedChallenge;
   try {
     signedChallenge = await startRegistration(challenge);
+    localStorage.setItem('verification', JSON.stringify( signedChallenge));
   } catch (error) {
     displayMessage(error);
     throw error;
@@ -57,7 +58,6 @@ loginBtn.addEventListener("click", async () => {
     displayMessage("Success!");
     // Store the username and verification data in localStorage before redirecting
     localStorage.setItem('username', unameInput.value);
-    localStorage.setItem('verification', JSON.stringify(verification));
     window.location.href = "https://webauthn-node.onrender.com/loggedin.html";
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
