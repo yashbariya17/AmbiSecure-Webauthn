@@ -55,8 +55,9 @@ loginBtn.addEventListener("click", async () => {
 
   if (verification?.verified) {
     displayMessage("Success!");
-    // Store the username in localStorage before redirecting
+    // Store the username and verification data in localStorage before redirecting
     localStorage.setItem('username', unameInput.value);
+    localStorage.setItem('verification', JSON.stringify(verification));
     window.location.href = "https://webauthn-node.onrender.com/loggedin.html";
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
