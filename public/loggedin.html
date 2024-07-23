@@ -1,1 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Fido Validation Demo</title>
+    <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
+        button {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .container {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #ff5e5e, white);
+            padding: 40px 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title {
+            color: white;
+            font-size: 2em;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .products-section {
+            padding: 50px 20px;
+            background-color: #f7f7f7;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            justify-items: center;
+            align-items: start;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
+            width: 80%;
+            gap: 20px;
+        }
+
+        .product-info {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .product-description {
+            margin: 10px 0;
+        }
+
+        .know-more-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #ff5e5e;
+            color: white;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .footer-text {
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        .sponsor-logo {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sponsor-img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .product-image {
+            max-width: 100px;
+            max-height: 100px;
+            margin-bottom: 0;
+        }
+
+        .terminal-box {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Fido Validation demo</h1>
+            <div class="terminal-box">
+                <!-- This is where your terminal logs will appear -->
+            </div>
+        </header>
+        <main>
+            <h2 class="section-title">Explore Products</h2>
+            <section class="products-section">
+                <div class="product-card">
+                    <img src="./network.png" alt="Product Image" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
+                        <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.</p>
+                    </div>
+                    <button class="know-more-button">Know more</button>
+                </div>
+                <div class="product-card">
+                    <img src="./id.png" alt="Product Image" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">AmbiSecure One Pass card</h3>
+                        <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+                    </div>
+                    <button class="know-more-button">Know more</button>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <p class="footer-text">Sponsored by</p>
+            <div class="sponsor-logo">
+                <img src="./AmbiS.jpg" alt="Sponsor Logo" class="sponsor-img">
+            </div>
+        </footer>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
