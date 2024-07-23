@@ -68,15 +68,15 @@
             border-radius: 10px;
             padding: 20px;
             display: flex;
-            flex-direction: column; /* Ensure flex direction is column */
-            align-items: center; /* Align items in center horizontally */
+            flex-direction: column;
+            align-items: center;
             width: 80%;
         }
 
         .product-info {
             text-align: left;
             flex-grow: 1;
-            margin-top: 20px; /* Add margin to separate image and text */
+            margin-top: 20px;
         }
 
         .product-title {
@@ -127,8 +127,8 @@
         .product-image {
             max-width: 100px;
             max-height: 100px;
-            margin-bottom: 20px; /* Add margin to separate image and text */
-            flex-shrink: 0; /* Prevent image from shrinking */
+            margin-bottom: 20px;
+            flex-shrink: 0;
         }
 
         .terminal-box {
@@ -192,7 +192,8 @@
             }
 
             if (verification) {
-                document.getElementById('verification').textContent = JSON.parse(verification);
+                const formattedVerification = JSON.stringify(JSON.parse(verification), null, 2);
+                document.getElementById('verification').textContent = formattedVerification;
             }
         });
     </script>
