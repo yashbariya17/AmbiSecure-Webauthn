@@ -25,7 +25,6 @@ regBtn.addEventListener("click", async () => {
   let signedChallenge;
   try {
     signedChallenge = await startRegistration(challenge);
-    localStorage.setItem('verification', JSON.stringify( signedChallenge));
   } catch (error) {
     displayMessage(error);
     throw error;
@@ -47,6 +46,7 @@ loginBtn.addEventListener("click", async () => {
   let signedChallenge;
   try {
     signedChallenge = await startAuthentication(challenge);
+    localStorage.setItem('verification', JSON.stringify(signedChallenge));
   } catch (error) {
     displayMessage(error);
     throw error;
