@@ -14,10 +14,7 @@ async function myfetch(url, payload) {
     method: "POST",
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
-  }).then((res) => {
-    // console.log(res.json())
-  return  res.json()
-  });
+  }).then((res) => res.json());
 }
 
 regBtn.addEventListener("click", async () => {
@@ -25,15 +22,19 @@ regBtn.addEventListener("click", async () => {
 
   const challenge = await myfetch("https://webauthn-node.onrender.com/register", { username: unameInput.value });
 
-  let signedChallenge = await startRegistration(challenge).catch((error) => {
+  let signedChallenge;
+  try {
+    signedChallenge = await startRegistration(challenge);
+  } catch (error) {
     displayMessage(error);
     throw error;
-  });
+  }
 
   const verification = await myfetch("https://webauthn-node.onrender.com/register/complete", signedChallenge);
 
   if (verification?.verified) {
     displayMessage("Success!");
+    window.location = "https://www.webauthn-node.onrender.com/loggedIn.html"; // Redirect to logged in page
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
@@ -43,15 +44,19 @@ loginBtn.addEventListener("click", async () => {
   displayMessage("");
   const challenge = await myfetch("/login", { username: unameInput.value });
 
-  let signedChallenge = await startAuthentication(challenge).catch((error) => {
+  let signedChallenge;
+  try {
+    signedChallenge = await startAuthentication(challenge);
+  } catch (error) {
     displayMessage(error);
     throw error;
-  });
+  }
 
   const verification = await myfetch("/login/complete", signedChallenge);
 
   if (verification?.verified) {
     displayMessage("Success!");
+    window.location = "https://www.webauthn-node.onrender.com/loggedIn.html"; // Redirect to logged in page
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
