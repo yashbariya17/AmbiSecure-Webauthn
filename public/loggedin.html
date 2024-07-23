@@ -148,6 +148,7 @@
             <div class="logged-in">Logged in</div>
             <div class="terminal-box">
                 <p id="name"></p>
+                <pre id="verification"></pre>
                 <!-- This is where your terminal logs will appear -->
             </div>
         </header>
@@ -182,10 +183,16 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const username = localStorage.getItem('username');
+            const verification = localStorage.getItem('verification');
+
             if (username) {
                 document.getElementById('name').innerHTML = `Welcome, ${username}!`;
             } else {
                 document.getElementById('name').innerHTML = 'Welcome, Guest!';
+            }
+
+            if (verification) {
+                document.getElementById('verification').textContent = verification;
             }
         });
     </script>
