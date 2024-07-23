@@ -34,7 +34,6 @@ regBtn.addEventListener("click", async () => {
 
   if (verification?.verified) {
     displayMessage("Success!");
-      window.location.href = "https://webauthn-node.onrender.com/loggedin.html"
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
@@ -56,7 +55,7 @@ loginBtn.addEventListener("click", async () => {
 
   if (verification?.verified) {
     displayMessage("Success!");
-    window.location = "https://www.webauthn-node.onrender.com/loggedIn.html"; // Redirect to logged in page
+    window.location.href = "https://webauthn-node.onrender.com/loggedin.html"
   } else {
     displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
