@@ -32,6 +32,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            min-height: 100vh; /* Make header take full screen height */
         }
 
         .title {
@@ -56,6 +57,11 @@
             margin-bottom: 20px;
         }
 
+        .main-content {
+            background-color: #f7f7f7;
+            padding: 40px 20px;
+        }
+
         .section-title {
             margin-bottom: 20px;
             font-size: 1.5em;
@@ -63,12 +69,9 @@
         }
 
         .products-section {
-            padding: 20px;
-            background-color: #f7f7f7;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            justify-content: center;
+            gap: 40px;
             align-items: center;
         }
 
@@ -80,7 +83,15 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            width: 90%;
+            width: 80%;
+        }
+
+        .product-card.left {
+            align-self: flex-start;
+        }
+
+        .product-card.right {
+            align-self: flex-end;
         }
 
         .product-image {
@@ -118,7 +129,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 60px; /* Adjusted height */
+            height: 60px;
             margin-top: 20px;
         }
 
@@ -153,10 +164,10 @@
             </div>
         </header>
 
-        <main>
+        <main class="main-content">
             <h2 class="section-title">Explore Products</h2>
             <section class="products-section">
-                <div class="product-card upper-left">
+                <div class="product-card left">
                     <img src="./network.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure FIDO Validation Server</h3>
@@ -164,7 +175,7 @@
                         <button class="know-more-button">Know more</button>
                     </div>
                 </div>
-                <div class="product-card lower-right" style="margin-top: 40px;">
+                <div class="product-card right">
                     <img src="./id.png.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure One Pass Card</h3>
