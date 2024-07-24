@@ -33,7 +33,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: transparent; /* Remove background to show gradient */
+            background: transparent;
         }
 
         .title {
@@ -70,66 +70,51 @@
         }
 
         .terminal-box {
-            width: 50%;
-            height: 200px;
-            border: 1px solid #ccc;
-            overflow-y: auto;
-            padding: 10px;
-            background-color: white;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            text-align: center;
-        }
-
-        .products-section {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .product-card {
-            background: white;
-            border: 1px solid #e0e0e0;
+            width: 70%;
+            height: 300px;
             border-radius: 10px;
+            overflow-y: auto;
             padding: 20px;
+            background-color: #2e2e2e;
+            color: #00ff00;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .terminal-header {
             display: flex;
-            flex-direction: row;
+            justify-content: space-between;
             align-items: center;
-            width: 40%;
+            background-color: #1a1a1a;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            color: white;
         }
 
-        .product-card.left {
-            align-self: flex-start;
+        .terminal-header .buttons {
+            display: flex;
+            gap: 5px;
         }
 
-        .product-card.right {
-            align-self: flex-end;
+        .terminal-header .button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ff5e5e;
         }
 
-        .product-image {
-            max-width: 100px;
-            max-height: 100px;
-            flex-shrink: 0;
+        .terminal-header .button.yellow {
+            background-color: #ffbd2e;
         }
 
-        .product-info {
-            text-align: left;
-            flex-grow: 1;
-            margin-left: 20px;
+        .terminal-header .button.green {
+            background-color: #27c93f;
         }
 
-        .product-title {
-            margin: 0;
-            font-size: 1.2em;
-        }
-
-        .product-description {
-            margin: 10px 0;
+        .terminal-content {
+            padding: 10px;
+            font-family: monospace;
+            overflow-y: auto;
         }
 
         .footer {
@@ -163,8 +148,18 @@
     <div class="container">
         <header class="header">
             <div class="terminal-box">
-                <p id="name"></p>
-                <pre id="verification"></pre>
+                <div class="terminal-header">
+                    <div class="buttons">
+                        <div class="button red"></div>
+                        <div class="button yellow"></div>
+                        <div class="button green"></div>
+                    </div>
+                    <div>Terminal</div>
+                </div>
+                <div class="terminal-content">
+                    <p id="name"></p>
+                    <pre id="verification"></pre>
+                </div>
             </div>
             <div class="logged-in">Logged in!</div>
             <div class="sub-text">Fido successfully authenticated</div>
