@@ -9,7 +9,6 @@
         body {
             margin: 0;
             font-family: 'Ubuntu', Arial, sans-serif;
-            background: linear-gradient(to bottom, #ff5e5e, white);
         }
 
         button {
@@ -27,13 +26,13 @@
         }
 
         .header {
+            background: linear-gradient(to bottom, #ff5e5e, white);
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: transparent; /* Remove background to show gradient */
+            min-height: 100vh; /* Make header take full screen height */
         }
 
         .title {
@@ -43,30 +42,9 @@
         }
 
         .logged-in {
-            font-size: 2em;
+            font-size: 1.5em;
             font-weight: bold;
-            margin-bottom: 10px;
-            color: white;
-        }
-
-        .sub-text {
-            font-size: 1.2em;
             margin-bottom: 20px;
-            color: white;
-        }
-
-        .try-again-button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            background-color: white;
-            color: #ff5e5e;
-        }
-
-        .main-content {
-            background-color: #f7f7f7;
-            padding: 40px 20px;
         }
 
         .terminal-box {
@@ -77,21 +55,11 @@
             padding: 10px;
             background-color: white;
             margin-bottom: 20px;
-            position: relative;
         }
 
-        .terminal-box::before {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('file-A2HT5AZx32Z7PvRQqkc2FB1r') no-repeat center;
-            background-size: cover;
-            z-index: -1;
-            opacity: 0.1;
+        .main-content {
+            background-color: #f7f7f7;
+            padding: 40px 20px;
         }
 
         .section-title {
@@ -115,7 +83,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            width: 40%;
+            width: 40%; /* Adjusted to half the size */
         }
 
         .product-card.left {
@@ -145,6 +113,16 @@
 
         .product-description {
             margin: 10px 0;
+        }
+
+        .know-more-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #ff5e5e;
+            color: white;
+            margin-top: 10px;
         }
 
         .footer {
@@ -177,13 +155,13 @@
 <body>
     <div class="container">
         <header class="header">
+            <h1 class="title">Fido Validation Demo</h1>
+            <div class="logged-in">Logged in</div>
             <div class="terminal-box">
                 <p id="name"></p>
                 <pre id="verification"></pre>
+                <!-- This is where your terminal logs will appear -->
             </div>
-            <div class="logged-in">Logged in!</div>
-            <div class="sub-text">Fido successfully authenticated</div>
-            <button class="try-again-button">Try again</button>
         </header>
 
         <main class="main-content">
@@ -194,6 +172,7 @@
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure FIDO Validation Server</h3>
                         <p class="product-description">AmbiSecure FIDO Validation Server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.</p>
+                        <button class="know-more-button">Know more</button>
                     </div>
                 </div>
                 <div class="product-card right">
@@ -201,6 +180,7 @@
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure One Pass Card</h3>
                         <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+                        <button class="know-more-button">Know more</button>
                     </div>
                 </div>
             </section>
