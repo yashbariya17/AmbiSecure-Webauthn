@@ -65,11 +65,11 @@
         .products-section {
             padding: 20px;
             background-color: #f7f7f7;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-            justify-items: center;
-            align-items: start;
+            justify-content: center;
+            align-items: center;
         }
 
         .product-card {
@@ -118,7 +118,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px;
+            height: 60px; /* Adjusted height */
             margin-top: 20px;
         }
 
@@ -164,7 +164,7 @@
                         <button class="know-more-button">Know more</button>
                     </div>
                 </div>
-                <div class="product-card lower-right">
+                <div class="product-card lower-right" style="margin-top: 40px;">
                     <img src="./id.png.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure One Pass Card</h3>
