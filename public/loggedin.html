@@ -9,8 +9,6 @@
         body {
             margin: 0;
             font-family: 'Ubuntu', Arial, sans-serif;
-            background-color: #1e1e1e; /* Dark background for the terminal feel */
-            color: #c5c5c5; /* Light text color */
         }
 
         button {
@@ -34,7 +32,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100vh; /* Make header take full screen height */
         }
 
         .title {
@@ -52,17 +50,11 @@
         .terminal-box {
             width: 50%;
             height: 200px;
-            border: 2px solid #333; /* Darker border for the terminal feel */
-            border-radius: 5px; /* Rounded corners for the terminal box */
+            border: 1px solid #ccc;
             overflow-y: auto;
             padding: 10px;
-            background-color: #000; /* Black background for the terminal */
-            color: #00ff00; /* Classic green text color for terminal */
-            font-family: 'Courier New', monospace; /* Monospace font for terminal look */
-            font-size: 1em;
+            background-color: white;
             margin-bottom: 20px;
-            white-space: pre-wrap; /* Preserve whitespace formatting */
-            text-align: left; /* Align text to the left */
         }
 
         .main-content {
@@ -91,7 +83,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            width: 40%;
+            width: 40%; /* Adjusted to half the size */
         }
 
         .product-card.left {
@@ -208,7 +200,7 @@
             const verification = localStorage.getItem('verification');
 
             if (username) {
-                document.getElementById('name').innerHTML = `Welcome, ${username}!`;
+                document.getElementById('name').innerHTML = Welcome, ${username}!;
             } else {
                 document.getElementById('name').innerHTML = 'Welcome, Guest!';
             }
@@ -220,4 +212,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
