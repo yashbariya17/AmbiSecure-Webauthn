@@ -93,11 +93,21 @@
             padding-top: 25px; /* Add padding to avoid overlap with header */
         }
 
-        pre {
+        .json-output {
             white-space: pre-wrap; /* Allows wrapping of long lines */
             word-break: break-all; /* Break long words to prevent overflow */
             margin: 0;
             padding: 0;
+        }
+
+        .json-key {
+            color: #ffa500; /* Orange color for keys */
+            display: inline-block;
+            width: 150px; /* Fixed width for alignment */
+        }
+
+        .json-value {
+            color: #00ff00; /* Green color for values */
         }
 
         .main-content {
@@ -208,7 +218,7 @@
                 </div>
                 <div class="terminal-content">
                     <p id="name"></p>
-                    <pre id="verification"></pre>
+                    <pre id="verification" class="json-output"></pre>
                     <!-- This is where your terminal logs will appear -->
                 </div>
             </div>
@@ -256,10 +266,31 @@
             }
 
             if (verification) {
-                const formattedVerification = JSON.stringify(JSON.parse(verification), null, 2);
-                document.getElementById('verification').textContent = formattedVerification;
+                const parsedVerification = JSON.parse(verification);
+                const formattedVerification = formatJson(parsedVerification);
+                document.getElementById('verification').innerHTML = formattedVerification;
             }
         });
+
+        function formatJson(json, indent = 0) {
+            let formatted = '';
+            const indentStr = ' '.repeat(indent);
+            if (typeof json === 'object' && !Array.isArray(json) && json !== null) {
+                for (const key in json) {
+                    if (json.hasOwnProperty(key)) {
+                        formatted += `<span class="json-key">${indentStr}${key}:</span> `;
+                        if (typeof json[key] === 'object') {
+                            formatted += '\n' + formatJson(json[key], indent + 2);
+                        } else {
+                            formatted += `<span class="json-value">${JSON.stringify(json[key])}</span>\n`;
+                        }
+                    }
+                }
+            } else {
+                formatted += `<span class="json-value">${JSON.stringify(json)}</span>\n`;
+            }
+            return formatted;
+        }
     </script>
 </body>
 </html>
