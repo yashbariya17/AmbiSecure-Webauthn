@@ -301,9 +301,10 @@
       Object.keys(obj).forEach((i)=>{
         const elm=document.createElement('p')
         let text=obj[i]
-        if(i==='response'||i==='clientExtensionResults'){
-            text=JSON.parse(obj[i])
-        }
+        // if(i==='response'||i==='clientExtensionResults'){
+        //     text=JSON.parse(obj[i])
+        // }
+        console.log(obj)
         elm.innerText=`${i}:${text}`
         displayDiv.appendChild(elm)
       })
