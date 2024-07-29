@@ -295,8 +295,14 @@
             }
 
             if (verification) {
-                const formattedVerification = JSON.stringify(JSON.parse(verification), null, 2);
-                document.getElementById('verification').textContent = formattedVerification;
+                const obj = JSON.parse(verification);
+              const displayDiv=  document.getElementById('verification');
+             
+      Object.keys(obj).forEach((i)=>{
+        const elm=document.createElement('p')
+        elm.innerText=`${i}:${obj[i]}`
+        displayDiv.appendChild(elm)
+      })
             }
         });
     </script>
