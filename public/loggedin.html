@@ -258,6 +258,7 @@
                     <div class="terminal-button maximize"></div>
                 </div>
                 <div class="terminal-content" id="verification">
+                    <p id="name"></p>
                     <!-- This is where your terminal logs will appear -->
                 </div>
             </div>
@@ -325,7 +326,7 @@
                             elm.appendChild(temp);
                         });
                     } else {
-                        elm.classList.add('value');
+                        elm.classList.add('key');
                         elm.innerText = `${i}: ${obj[i]}`;
                     }
                     displayDiv.appendChild(elm);
