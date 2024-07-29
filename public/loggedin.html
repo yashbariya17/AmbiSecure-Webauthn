@@ -91,23 +91,31 @@
         }
 
         .terminal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
             padding-top: 25px;
             font-size: 1em;
             white-space: pre-wrap;
             word-break: break-word;
         }
 
-        .terminal-content p {
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
+        .entry {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            width: 100%;
         }
 
-        .terminal-content .key {
+        .key {
+            text-align: left;
+            flex-basis: 30%;
             font-weight: bold;
         }
 
-        .terminal-content .value {
+        .value {
+            text-align: right;
+            flex-basis: 70%;
             color: #e0e0e0;
         }
 
@@ -259,7 +267,6 @@
                 </div>
                 <div class="terminal-content" id="verification">
                     <p id="name"></p>
-                    <!-- This is where your terminal logs will appear -->
                 </div>
             </div>
         </header>
@@ -315,21 +322,30 @@
                 const displayDiv = document.getElementById('verification');
 
                 Object.keys(obj).forEach((i) => {
-                    const elm = document.createElement('p');
+                    const entry = document.createElement('div');
+                    entry.classList.add('entry');
+                    
+                    const key = document.createElement('div');
+                    key.classList.add('key');
+                    key.innerText = i;
+                    
+                    const value = document.createElement('div');
+                    value.classList.add('value');
                     if (typeof obj[i] === 'object') {
-                        elm.classList.add('key');
-                        elm.innerText = `${i}:`;
+                        value.innerText = ''; // Empty value for object type
                         Object.keys(obj[i]).forEach((j) => {
-                            const temp = document.createElement('p');
-                            temp.classList.add('value');
-                            temp.innerText = `${j}: ${obj[i][j]}`;
-                            elm.appendChild(temp);
+                            const subEntry = document.createElement('div');
+                            subEntry.classList.add('entry');
+                            subEntry.innerHTML = `<span class="key">${j}:</span> <span class="value">${obj[i][j]}</span>`;
+                            value.appendChild(subEntry);
                         });
                     } else {
-                        elm.classList.add('key');
-                        elm.innerText = `${i}: ${obj[i]}`;
+                        value.innerText = obj[i];
                     }
-                    displayDiv.appendChild(elm);
+
+                    entry.appendChild(key);
+                    entry.appendChild(value);
+                    displayDiv.appendChild(entry);
                 });
             }
         });
