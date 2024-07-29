@@ -94,11 +94,13 @@
         }
 
         pre {
-            white-space: pre-wrap; /* Allows wrapping of long lines */
-            word-break: break-word; /* Break long words to prevent overflow */
+            white-space: nowrap; /* Prevents wrapping of long lines */
+            overflow-x: auto; /* Adds horizontal scrollbar if necessary */
+            word-break: break-word; /* Breaks long words to prevent overflow */
             margin: 0;
             padding: 0;
             text-align: left; /* Align text to the left */
+            font-size: 1em; /* Ensure text size is readable */
         }
 
         .main-content {
@@ -296,10 +298,16 @@
 
             if (verification) {
                 try {
-                    const formattedVerification = JSON.stringify(JSON.parse(verification), null, 2);
-                    document.getElementById('verification').textContent = formattedVerification;
+                    const data = JSON.parse(verification);
+                    const formattedVerification = `
+Authenticator Data: ${data.response.authenticatorData}
+Client Data JSON: ${data.response.clientDataJSON}
+Signature: ${data.response.signature}
+rawId: ${data.rawId || 'undefined'}
+                    `;
+                    document.getElementById('verification').textContent = formattedVerification.trim();
                 } catch (error) {
-                    document.getElementById('verification').textContent = 'Invalid JSON data';
+                    document.getElementById('verification').textContent = 'Error parsing verification data.';
                 }
             }
         });
