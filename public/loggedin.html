@@ -247,8 +247,7 @@
                 </div>
                 <div class="terminal-content">
                     <p id="name"></p>
-                    <code id="verification"></code>
-                    <!-- This is where your terminal logs will appear -->
+                    <pre id="verification"></pre>
                 </div>
             </div>
         </header>
@@ -295,8 +294,12 @@
             }
 
             if (verification) {
-                const formattedVerification = JSON.stringify(JSON.parse(verification), null, 2);
-                document.getElementById('verification').textContent = formattedVerification;
+                try {
+                    const formattedVerification = JSON.stringify(JSON.parse(verification), null, 2);
+                    document.getElementById('verification').textContent = formattedVerification;
+                } catch (error) {
+                    document.getElementById('verification').textContent = 'Invalid JSON data';
+                }
             }
         });
     </script>
