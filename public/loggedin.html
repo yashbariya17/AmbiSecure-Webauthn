@@ -33,7 +33,6 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* Make header take full screen height */
         }
 
         .title {
@@ -52,7 +51,6 @@
             width: 80%;
             max-width: 600px;
             height: 300px;
-            /* Adjusted height */
             border: 1px solid #ccc;
             overflow-y: auto;
             padding: 10px;
@@ -94,16 +92,23 @@
 
         .terminal-content {
             padding-top: 25px;
-            /* Add padding to avoid overlap with header */
+            font-size: 1em;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
-        pre {
-            white-space: pre-wrap;
-            /* Allows wrapping of long lines */
-            word-break: break-all;
-            /* Break long words to prevent overflow */
+        .terminal-content p {
             margin: 0;
             padding: 0;
+            line-height: 1.5;
+        }
+
+        .terminal-content .key {
+            font-weight: bold;
+        }
+
+        .terminal-content .value {
+            color: #e0e0e0;
         }
 
         .main-content {
@@ -133,7 +138,6 @@
             flex-direction: row;
             align-items: center;
             width: 80%;
-            /* Adjusted to half the size */
             max-width: 600px;
         }
 
@@ -253,9 +257,7 @@
                     <div class="terminal-button minimize"></div>
                     <div class="terminal-button maximize"></div>
                 </div>
-                <div class="terminal-content">
-                    <p id="name"></p>
-                    <pre id="verification"></pre>
+                <div class="terminal-content" id="verification">
                     <!-- This is where your terminal logs will appear -->
                 </div>
             </div>
@@ -309,24 +311,25 @@
 
             if (verification) {
                 const obj = JSON.parse(verification);
-              const displayDiv=  document.getElementById('verification');
-             
-      Object.keys(obj).forEach((i)=>{
-        const elm = document.createElement('p')
-            if (typeof obj[i] === 'object') {
-                elm.innerText=`${i}:`
-                Object.keys(obj[i]).forEach((j) => {
-                    const temp = document.createElement('p')
-                    temp.innerText = `${j}:${obj[i][j]}`
-                    elm.appendChild(temp)
-                }
-                )
-            } else {
+                const displayDiv = document.getElementById('verification');
 
-                elm.innerText = `${i}:${obj[i]}`
-            }
-            displayDiv.appendChild(elm)
-      })
+                Object.keys(obj).forEach((i) => {
+                    const elm = document.createElement('p');
+                    if (typeof obj[i] === 'object') {
+                        elm.classList.add('key');
+                        elm.innerText = `${i}:`;
+                        Object.keys(obj[i]).forEach((j) => {
+                            const temp = document.createElement('p');
+                            temp.classList.add('value');
+                            temp.innerText = `${j}: ${obj[i][j]}`;
+                            elm.appendChild(temp);
+                        });
+                    } else {
+                        elm.classList.add('value');
+                        elm.innerText = `${i}: ${obj[i]}`;
+                    }
+                    displayDiv.appendChild(elm);
+                });
             }
         });
     </script>
