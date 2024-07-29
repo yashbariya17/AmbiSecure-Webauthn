@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +32,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Make header take full screen height */
+            min-height: 100vh;
+            /* Make header take full screen height */
         }
 
         .title {
@@ -49,7 +51,8 @@
         .terminal-box {
             width: 80%;
             max-width: 600px;
-            height: 300px; /* Adjusted height */
+            height: 300px;
+            /* Adjusted height */
             border: 1px solid #ccc;
             overflow-y: auto;
             padding: 10px;
@@ -90,12 +93,15 @@
         }
 
         .terminal-content {
-            padding-top: 25px; /* Add padding to avoid overlap with header */
+            padding-top: 25px;
+            /* Add padding to avoid overlap with header */
         }
 
         pre {
-            white-space: pre-wrap; /* Allows wrapping of long lines */
-            word-break: break-all; /* Break long words to prevent overflow */
+            white-space: pre-wrap;
+            /* Allows wrapping of long lines */
+            word-break: break-all;
+            /* Break long words to prevent overflow */
             margin: 0;
             padding: 0;
         }
@@ -126,7 +132,8 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            width: 80%; /* Adjusted to half the size */
+            width: 80%;
+            /* Adjusted to half the size */
             max-width: 600px;
         }
 
@@ -234,6 +241,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -260,7 +268,9 @@
                     <img src="./network.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure FIDO Validation Server</h3>
-                        <p class="product-description">AmbiSecure FIDO Validation Server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.</p>
+                        <p class="product-description">AmbiSecure FIDO Validation Server is a solution enabling
+                            multi-factor authentication. It enables a service provider to securely and seamlessly
+                            authenticate its users without the hassle of recalling or typing passwords.</p>
                         <button class="know-more-button">Know more</button>
                     </div>
                 </div>
@@ -268,7 +278,10 @@
                     <img src="./id.png.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure One Pass Card</h3>
-                        <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
+                        <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a
+                            passwordless future with resident credentials by supporting the FIDO2 protocol. It is the
+                            ultimate all-in-one ID card that can be branded and customized to a company-specific
+                            identification requirement.</p>
                         <button class="know-more-button">Know more</button>
                     </div>
                 </div>
@@ -296,20 +309,29 @@
 
             if (verification) {
                 const obj = JSON.parse(verification);
-              const displayDiv=  document.getElementById('verification');
-             
-      Object.keys(obj).forEach((i)=>{
-        const elm=document.createElement('p')
-        let text=obj[i]
-        // if(i==='response'||i==='clientExtensionResults'){
-        //     text=JSON.parse(obj[i])
-        // }
-        console.log(obj)
-        elm.innerText=`${i}:${text}`
-        displayDiv.appendChild(elm)
-      })
+                const displayDiv = document.getElementById('verification');
+
+                Object.keys(obj).forEach((i) => {
+                    const elm = document.createElement('p')
+                    let text = obj[i]
+                    if (i === 'response') {
+                        elm.appendChild(document.createElement('p').innerText=i)
+                        Object.keys(obj[i]).forEach((j) => {
+                            const temp = document.createElement('p').innerHTML = `${j}:${obj[i][j]}`
+                            elm.appendChild(temp)
+                        })
+                    }
+                    else {
+                        if (i === 'clientExtensionResults') {
+                            text = JSON.stringify(obj[i])
+                        }
+                        elm.innerText = `${i}:${text}`
+                    }
+                    displayDiv.appendChild(elm)
+                })
             }
         });
     </script>
 </body>
+
 </html>
