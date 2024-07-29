@@ -309,26 +309,24 @@
 
             if (verification) {
                 const obj = JSON.parse(verification);
-                const displayDiv = document.getElementById('verification');
+              const displayDiv=  document.getElementById('verification');
+             
+      Object.keys(obj).forEach((i)=>{
+        const elm = document.createElement('p')
+            if (typeof obj[i] === 'object') {
+                elm.innerText=`${i}:`
+                Object.keys(obj[i]).forEach((j) => {
+                    const temp = document.createElement('p')
+                    temp.innerText = `${j}:${obj[i][j]}`
+                    elm.appendChild(temp)
+                }
+                )
+            } else {
 
-                Object.keys(obj).forEach((i) => {
-                    const elm = document.createElement('p')
-                    let text = obj[i]
-                    if (i === 'response') {
-                        elm.appendChild(document.createElement('p').innerText=i)
-                        Object.keys(obj[i]).forEach((j) => {
-                            const temp = document.createElement('p').innerHTML = `${j}:${obj[i][j]}`
-                            elm.appendChild(temp)
-                        })
-                    }
-                    else {
-                        if (i === 'clientExtensionResults') {
-                            text = JSON.stringify(obj[i])
-                        }
-                        elm.innerText = `${i}:${text}`
-                    }
-                    displayDiv.appendChild(elm)
-                })
+                elm.innerText = `${i}:${obj[i]}`
+            }
+            displayDiv.appendChild(elm)
+      })
             }
         });
     </script>
