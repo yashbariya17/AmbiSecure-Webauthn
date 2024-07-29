@@ -300,7 +300,11 @@
              
       Object.keys(obj).forEach((i)=>{
         const elm=document.createElement('p')
-        elm.innerText=`${i}:${obj[i]}`
+        let text=obj[i]
+        if(i==='response'||i==='clientExtensionResults'){
+            text=JSON.parse(obj[i])
+        }
+        elm.innerText=`${i}:${text}`
         displayDiv.appendChild(elm)
       })
             }
