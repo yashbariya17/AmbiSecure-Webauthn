@@ -34,7 +34,7 @@
         .header {
             background: linear-gradient(to bottom, #ff5e5e, white);
             padding: 40px 20px;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -57,29 +57,30 @@
             border-radius: 5px;
             font-size: 1em;
             margin-bottom: 20px;
-            width: 300px;
+            width: 80%;
+            max-width: 300px;
         }
 
         .button-container {
             display: flex;
             justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .login {
+        .login, .register {
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             font-size: 1em;
+        }
+
+        .login {
             background-color: #4a4a4a;
             color: white;
         }
 
         .register {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
             background-color: white;
             color: black;
             text-decoration: none;
@@ -90,8 +91,7 @@
             padding: 50px 20px;
             background-color: #f7f7f7;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             justify-items: center;
             align-items: start;
@@ -104,45 +104,40 @@
             text-align: center;
         }
 
-.product-card {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 30px; /* Increase padding for more space */
-    display: flex;
-    flex-direction: row; /* Ensure landscape orientation */
-    align-items: center; /* Center items vertically */
-    text-align: left;
-    width: 90%; /* Adjust width as needed */
-    max-width: 600px; /* Limit maximum width */
-}
-
-
-        .product-card.upper-left {
-            grid-column: 1 / 2;
-            grid-row: 1 / 2;
+        .product-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            text-align: left;
+            width: 90%;
+            max-width: 600px;
         }
 
-        .product-card.lower-right {
-            grid-column: 2 / 3;
-            grid-row: 2 / 3;
+        .product-image {
+            width: 100px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
         }
 
-.product-info {
-    flex-grow: 1;
-    margin-left: 20px; /* Add space between image and text */
-}
+        .product-info {
+            flex-grow: 1;
+        }
 
-.product-title {
-    margin: 0;
-    font-size: 1.5em; /* Increase font size */
-}
+        .product-title {
+            margin: 0;
+            font-size: 1.5em;
+        }
 
-.product-description {
-    margin: 10px 0; /* Adjust margin */
-    font-size: 1em; /* Increase font size */
-    line-height: 1.4; /* Improve line spacing */
-}
+        .product-description {
+            margin: 10px 0;
+            font-size: 1em;
+            line-height: 1.4;
+        }
 
         .know-more-button {
             padding: 10px 20px;
@@ -163,7 +158,6 @@
         .footer-text {
             margin: 0;
             margin-right: 10px;
-            /* Space between the text and the image */
         }
 
         .sponsor-logo {
@@ -179,12 +173,33 @@
             max-height: 100%;
         }
 
-.product-image {
-    width: 150px; /* Set a fixed width for the image */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 10px; /* Ensure rounded corners */
-    margin-right: 20px; /* Add space between image and text */
-}
+        @media (max-width: 600px) {
+            .header {
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 1.5em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .product-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .product-image {
+                width: 100%;
+                margin: 0 0 20px 0;
+            }
+
+            .product-info {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 
@@ -206,17 +221,17 @@
             <h2 class="section-title">Explore Products</h2>
             <section class="products-section">
                 <div class="product-card upper-left">
-                    <img src="./network.png" alt="Product Image" class="product-image"> <!-- Updated the path -->
+                    <img src="./network.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
                         <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling
                             multi-factor authentication. It enables a service provider to securely and seamlessly
                             authenticate its users without the hassle of recalling or typing passwords.</p>
-                            <button class="know-more-button">Know more</button>
+                        <button class="know-more-button">Know more</button>
                     </div>
                 </div>
                 <div class="product-card lower-right">
-                    <img src="id.png.png" alt="Product Image" class="product-image"> <!-- Updated the path -->
+                    <img src="id.png.png" alt="Product Image" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">AmbiSecure One Pass card</h3>
                         <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a
@@ -228,8 +243,8 @@
                 </div>
             </section>
         </main>
-                    <p class="footer-text">Sponsored by</p>
         <footer class="footer">
+            <p class="footer-text">Sponsored by</p>
             <div class="sponsor-logo">
                 <img src="./AmbiS.jpg" alt="Sponsor Logo" class="sponsor-img">
             </div>
