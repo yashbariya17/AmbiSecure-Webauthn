@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Fido Validation Demo</title>
-    <script src="https://unpkg.com/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet" />
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Ubuntu', Arial, sans-serif;
         }
 
         button {
@@ -28,71 +22,87 @@
 
         .container {
             text-align: center;
-            font-family: Arial, sans-serif;
         }
 
         .header {
             background: linear-gradient(to bottom, #ff5e5e, white);
             padding: 40px 20px;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            min-height: 100vh; /* Make header take full screen height */
         }
 
         .title {
             color: white;
             font-size: 2em;
-        }
-
-        .subtitle {
-            color: white;
-            margin: 10px 0 20px;
-        }
-
-        input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
             margin-bottom: 20px;
+        }
+
+        .logged-in {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .terminal-box {
             width: 80%;
-            max-width: 300px;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .login, .register {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-
-        .login {
-            background-color: #4a4a4a;
+            max-width: 600px;
+            height: 300px; /* Adjusted height */
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #2e2e2e;
             color: white;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            position: relative;
         }
 
-        .register {
-            background-color: white;
-            color: black;
-            text-decoration: none;
-            display: inline-block;
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            background-color: #1d1d1d;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            padding: 5px 10px;
         }
 
-        .products-section {
-            padding: 50px 20px;
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .close {
+            background-color: #ff5f56;
+        }
+
+        .minimize {
+            background-color: #ffbd2e;
+        }
+
+        .maximize {
+            background-color: #27c93f;
+        }
+
+        .terminal-content {
+            padding-top: 25px; /* Add padding to avoid overlap with header */
+        }
+
+        pre {
+            white-space: pre-wrap; /* Allows wrapping of long lines */
+            word-break: break-all; /* Break long words to prevent overflow */
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-content {
             background-color: #f7f7f7;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+            padding: 40px 20px;
         }
 
         .section-title {
@@ -101,40 +111,52 @@
             text-align: center;
         }
 
+        .products-section {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+
         .product-card {
             background: white;
             border: 1px solid #e0e0e0;
             border-radius: 10px;
-            padding: 30px;
+            padding: 20px;
             display: flex;
             flex-direction: row;
             align-items: center;
-            text-align: left;
-            width: 90%;
+            width: 80%; /* Adjusted to half the size */
             max-width: 600px;
-            margin: 0 auto;
+        }
+
+        .product-card.left {
+            align-self: flex-start;
+        }
+
+        .product-card.right {
+            align-self: flex-end;
         }
 
         .product-image {
-            width: 150px;
-            height: auto;
-            border-radius: 10px;
-            margin-right: 20px;
+            max-width: 100px;
+            max-height: 100px;
+            flex-shrink: 0;
         }
 
         .product-info {
+            text-align: left;
             flex-grow: 1;
+            margin-left: 20px;
         }
 
         .product-title {
             margin: 0;
-            font-size: 1.5em;
+            font-size: 1.2em;
         }
 
         .product-description {
             margin: 10px 0;
-            font-size: 1em;
-            line-height: 1.4;
         }
 
         .know-more-button {
@@ -144,13 +166,15 @@
             font-size: 1em;
             background-color: #ff5e5e;
             color: white;
+            margin-top: 10px;
         }
 
         .footer {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px;
+            height: 60px;
+            margin-top: 20px;
         }
 
         .footer-text {
@@ -171,92 +195,86 @@
             max-height: 100%;
         }
 
-        @media (min-width: 600px) {
-            .products-section {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .product-card.upper-left {
-                grid-column: 1 / 2;
-                grid-row: 1 / 2;
-            }
-
-            .product-card.lower-right {
-                grid-column: 2 / 3;
-                grid-row: 2 / 3;
-            }
-        }
-
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .header {
-                padding: 20px;
+                padding: 20px 10px;
             }
 
             .title {
                 font-size: 1.5em;
             }
 
-            .subtitle {
-                font-size: 1em;
+            .logged-in {
+                font-size: 1.2em;
+            }
+
+            .terminal-box {
+                width: 90%;
+                height: 250px;
+            }
+
+            .main-content {
+                padding: 20px 10px;
+            }
+
+            .section-title {
+                font-size: 1.2em;
             }
 
             .product-card {
+                width: 90%;
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            .product-image {
-                width: 100%;
-                margin: 0 0 20px 0;
-            }
-
             .product-info {
                 margin-left: 0;
+                margin-top: 10px;
             }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <header class="header">
-            <h1 class="title">Fido Validation demo</h1>
-            <p class="subtitle">A demo of the Fido2 validation specification</p>
-            <div class="login-form">
-                <input type="text" class="username" name="username" placeholder="Username" />
-                <div class="button-container">
-                    <button class="register">Register</button>
-                    <button class="login">Log In</button>
+            <h1 class="title">Fido Validation Demo</h1>
+            <div class="logged-in">Logged in</div>
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <div class="terminal-button close"></div>
+                    <div class="terminal-button minimize"></div>
+                    <div class="terminal-button maximize"></div>
                 </div>
-                <p class="message"></p>
+                <div class="terminal-content">
+                    <p id="name"></p>
+                    <pre id="verification"></pre>
+                    <!-- This is where your terminal logs will appear -->
+                </div>
             </div>
         </header>
-        <main>
+
+        <main class="main-content">
             <h2 class="section-title">Explore Products</h2>
             <section class="products-section">
-                <div class="product-card upper-left">
+                <div class="product-card left">
                     <img src="./network.png" alt="Product Image" class="product-image">
                     <div class="product-info">
-                        <h3 class="product-title">AmbiSecure FIDO Validation server</h3>
-                        <p class="product-description">AmbiSecure FIDO Validation server is a solution enabling
-                            multi-factor authentication. It enables a service provider to securely and seamlessly
-                            authenticate its users without the hassle of recalling or typing passwords.</p>
+                        <h3 class="product-title">AmbiSecure FIDO Validation Server</h3>
+                        <p class="product-description">AmbiSecure FIDO Validation Server is a solution enabling multi-factor authentication. It enables a service provider to securely and seamlessly authenticate its users without the hassle of recalling or typing passwords.</p>
                         <button class="know-more-button">Know more</button>
                     </div>
                 </div>
-                <div class="product-card lower-right">
-                    <img src="id.png.png" alt="Product Image" class="product-image">
+                <div class="product-card right">
+                    <img src="./id.png.png" alt="Product Image" class="product-image">
                     <div class="product-info">
-                        <h3 class="product-title">AmbiSecure One Pass card</h3>
-                        <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a
-                            passwordless future with resident credentials by supporting the FIDO2 protocol. It is the
-                            ultimate all-in-one ID card that can be branded and customized to a company-specific
-                            identification requirement.</p>
+                        <h3 class="product-title">AmbiSecure One Pass Card</h3>
+                        <p class="product-description">The AmbiSecure One Pass Card helps organizations accelerate to a passwordless future with resident credentials by supporting the FIDO2 protocol. It is the ultimate all-in-one ID card that can be branded and customized to a company-specific identification requirement.</p>
                         <button class="know-more-button">Know more</button>
                     </div>
                 </div>
             </section>
         </main>
+
         <footer class="footer">
             <p class="footer-text">Sponsored by</p>
             <div class="sponsor-logo">
@@ -264,7 +282,23 @@
             </div>
         </footer>
     </div>
-    <script src="index.js"></script>
-</body>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const username = localStorage.getItem('username');
+            const verification = localStorage.getItem('verification');
+
+            if (username) {
+                document.getElementById('name').innerHTML = `Welcome, ${username}!`;
+            } else {
+                document.getElementById('name').innerHTML = 'Welcome, Guest!';
+            }
+
+            if (verification) {
+                const formattedVerification = JSON.stringify(JSON.parse(verification), null, 2);
+                document.getElementById('verification').textContent = formattedVerification;
+            }
+        });
+    </script>
+</body>
 </html>
