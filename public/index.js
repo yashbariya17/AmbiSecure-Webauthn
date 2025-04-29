@@ -10,67 +10,56 @@ function displayMessage(msg) {
 }
 
 async function myfetch(url, payload) {
-  const res = await fetch(url, {
+  return await fetch(url, {
     method: "POST",
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
-  });
-
-  const contentType = res.headers.get('content-type');
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Server error ${res.status}: ${text}`);
-  }
-
-  if (!contentType || !contentType.includes('application/json')) {
-    const text = await res.text();
-    throw new Error(`Expected JSON, got: ${text}`);
-  }
-
-  return res.json();
+  }).then((res) => res.json());
 }
 
 regBtn.addEventListener("click", async () => {
   displayMessage("");
 
+  const challenge = await myfetch("https://webauthn-node.onrender.com/register", { username: unameInput.value });
+
+  let signedChallenge;
   try {
-    const challenge = await myfetch("https://webauthn-node.onrender.com/register", { username: unameInput.value });
-
-    const signedChallenge = await startRegistration(challenge);
-
-    const verification = await myfetch("https://webauthn-node.onrender.com/register/complete", signedChallenge);
-
-    if (verification?.verified) {
-      displayMessage("Registration Success!");
-    } else {
-      displayMessage(`<pre>${JSON.stringify(verification, null, 2)}</pre>`);
-    }
+    signedChallenge = await startRegistration(challenge);
   } catch (error) {
-    console.error(error);
-    displayMessage(error.message || "Unknown error during registration");
+    displayMessage(error);
+    throw error;
+  }
+
+  const verification = await myfetch("https://webauthn-node.onrender.com/register/complete", signedChallenge);
+
+  if (verification?.verified) {
+    displayMessage("Success!");
+  } else {
+    displayMessage(<pre>${JSON.stringify(verification)}</pre>);
   }
 });
 
 loginBtn.addEventListener("click", async () => {
   displayMessage("");
+  const challenge = await myfetch("/login", { username: unameInput.value });
 
+  let signedChallenge;
   try {
-    const challenge = await myfetch("https://webauthn-node.onrender.com/login", { username: unameInput.value });
-
-    const signedChallenge = await startAuthentication(challenge);
+    signedChallenge = await startAuthentication(challenge);
     localStorage.setItem('verification', JSON.stringify(signedChallenge));
-
-    const verification = await myfetch("https://webauthn-node.onrender.com/login/complete", signedChallenge);
-
-    if (verification?.verified) {
-      displayMessage("Login Success!");
-      localStorage.setItem('username', unameInput.value);
-      window.location.href = "https://webauthn-node.onrender.com/loggedin.html";
-    } else {
-      displayMessage(`<pre>${JSON.stringify(verification, null, 2)}</pre>`);
-    }
   } catch (error) {
-    console.error(error);
-    displayMessage(error.message || "Unknown error during login");
+    displayMessage(error);
+    throw error;
   }
-});
+
+  const verification = await myfetch("/login/complete", signedChallenge);
+
+  if (verification?.verified) {
+    displayMessage("Success!");
+    // Store the username and verification data in localStorage before redirecting
+    localStorage.setItem('username', unameInput.value);
+    window.location.href = "https://webauthn-node.onrender.com/loggedin.html";
+  } else {
+    displayMessage(<pre>${JSON.stringify(verification)}</pre>);
+  }
+}); 
