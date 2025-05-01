@@ -16,10 +16,10 @@ async function myfetch(url, payload) {
     headers: { "Content-Type": "application/json" },
   }).then((res) => res.json());
 }
+console.log('clciked',regBtn,loginBtn)
 
 regBtn.addEventListener("click", async () => {
 
-  console.log('clciked')
 
   displayMessage("");
 
