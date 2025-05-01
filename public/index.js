@@ -16,7 +16,6 @@ async function myfetch(url, payload) {
     headers: { "Content-Type": "application/json" },
   }).then((res) => res.json());
 }
-console.log('clciked',regBtn,loginBtn)
 
 regBtn.addEventListener("click", async () => {
 
@@ -38,7 +37,7 @@ regBtn.addEventListener("click", async () => {
   if (verification?.verified) {
     displayMessage("Success!");
   } else {
-    displayMessage(<pre>${JSON.stringify(verification)}</pre>);
+    displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
 });
 
@@ -63,6 +62,6 @@ loginBtn.addEventListener("click", async () => {
     localStorage.setItem('username', unameInput.value);
     window.location.href = "https://webauthn-node.onrender.com/loggedin.html";
   } else {
-    displayMessage(<pre>${JSON.stringify(verification)}</pre>);
+    displayMessage(`<pre>${JSON.stringify(verification)}</pre>`);
   }
 }); 
