@@ -18,6 +18,9 @@ async function myfetch(url, payload) {
 }
 
 regBtn.addEventListener("click", async () => {
+
+  console.log('clciked')
+
   displayMessage("");
 
   const challenge = await myfetch("https://webauthn-node.onrender.com/register", { username: unameInput.value });

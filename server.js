@@ -52,7 +52,7 @@ app.post("/register", async (req, res) => {
 
   let user;
   try {
-    let userData = await fetch('http://18.215.166.62/register', {
+    let userData = await fetch('http://3.92.91.119:3000/register', {
       method: "POST",
       body: JSON.stringify({ username: req.body.username }),
       headers: { "Content-Type": "application/json" }
@@ -173,7 +173,7 @@ app.post("/register/complete", async (req, res) => {
       console.log(payload);
 
       const passKeys = user.passKeys[0]; // Assuming only one passKey per user
-      const query = await fetch('http://18.215.166.62/register/complete', {
+      const query = await fetch('http://3.92.91.119:3000/register/complete', {
         method: "POST",
         body: payload,
         headers: {
@@ -202,7 +202,7 @@ app.post("/login", async (req, res) => {
   let user;
 
   try {
-    const userData = await fetch('http://18.215.166.62/login', {
+    const userData = await fetch('http://3.92.91.119:3000/login', {
       method: "POST",
       body: JSON.stringify({ username: req.body.username }),
       headers: { "Content-Type": "application/json" }
